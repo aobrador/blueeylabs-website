@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products & Services — Blueey Labs</title>
+  <meta name="description" content="Explore Blueey Labs products including Blufinn, and our full range of IT, app, and web development services." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    /* ── Blufinn Feature ── */
+    .blufinn-section { padding: 40px 24px 100px; }
+
+    .blufinn-hero-card {
+      max-width: 1160px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(10,22,40,0.9) 0%, rgba(6,13,26,0.95) 100%);
+      border: 1px solid rgba(26,109,255,0.3);
+      border-radius: 24px;
+      padding: 72px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blufinn-hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 50%;
+      height: 100%;
+      background: radial-gradient(ellipse at 80% 30%, rgba(0,212,255,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .blufinn-top {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 36px;
+      align-items: flex-start;
+      margin-bottom: 56px;
+    }
+
+    .blufinn-icon {
+      width: 100px; height: 100px;
+      border-radius: 22px;
+      box-shadow: 0 16px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
+      flex-shrink: 0;
+    }
+
+    .blufinn-headline { padding-top: 4px; }
+    .blufinn-headline .badge { margin-bottom: 14px; }
+    .blufinn-headline h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 12px; }
+    .blufinn-headline .tagline {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    .blufinn-desc {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 48px;
+      max-width: 680px;
+    }
+
+    .blufinn-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .feature-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      transition: border-color 0.2s;
+    }
+
+    .feature-item:hover { border-color: var(--border-hover); }
+
+    .feature-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .feature-text h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .feature-text p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
+
+    .blufinn-differentiators {
+      border-top: 1px solid var(--border);
+      padding-top: 40px;
+      margin-bottom: 48px;
+    }
+
+    .blufinn-differentiators h3 { margin-bottom: 24px; font-size: 1.1rem; color: var(--text-secondary); font-weight: 600; }
+
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .diff-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      background: rgba(0,212,255,0.05);
+      border: 1px solid rgba(0,212,255,0.12);
+      border-radius: 10px;
+    }
+
+    .diff-check {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: rgba(0,212,255,0.15);
+      border: 1px solid rgba(0,212,255,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem;
+      color: var(--cyan);
+      flex-shrink: 0;
+    }
+
+    .diff-item span { font-size: 0.88rem; color: var(--text-secondary); }
+
+    .blufinn-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* ── Services Section ── */
+    .services-detailed { padding: 80px 24px 100px; }
+
+    .services-detailed-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .service-detail-card h3 { margin-bottom: 10px; }
+    .service-detail-card .desc { font-size: 0.9rem; margin-bottom: 20px; line-height: 1.65; }
+
+    .service-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(26,109,255,0.1);
+      color: #6AABFF;
+      border: 1px solid rgba(26,109,255,0.18);
+    }
+
+    @media (max-width: 900px) {
+      .blufinn-hero-card { padding: 40px 32px; }
+      .blufinn-top { grid-template-columns: 1fr; gap: 24px; }
+      .blufinn-icon { width: 80px; height: 80px; }
+    }
+
+    @media (max-width: 600px) {
+      .blufinn-hero-card { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Blueey Labs</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Page Hero -->
+<div class="page-hero">
+  <div class="container">
+    <div class="section-label fade-up">What We Build</div>
+    <h1 class="fade-up fade-up-delay-1">Products &<br><span class="gradient-text">Services</span></h1>
+    <p class="fade-up fade-up-delay-2">From utility apps to full IT solutions — everything we build is intentional, clean, and built to last.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Blufinn -->
+<section class="blufinn-section" id="blufinn">
+  <div class="blufinn-hero-card fade-up">
+
+    <div class="blufinn-top">
+      <img src="assets/images/blufinn-icon.png" alt="Blufinn" class="blufinn-icon" />
+      <div class="blufinn-headline">
+        <span class="badge badge-cyan"><span class="badge-dot"></span>Coming Soon to App Store</span>
+        <h2><span class="gradient-text">Blufinn</span></h2>
+        <p class="tagline">Know what's due. Know what's left.</p>
+      </div>
+    </div>
+
+    <p class="blufinn-desc">
+      Blufinn is a private, local-first money planner for credit cards, recurring bills, budgets, and paychecks.
+      It helps you track what's due, organize what each paycheck needs to cover, and see what money you have
+      left — with complete clarity and without linking your bank accounts.
+    </p>
+
+    <div class="blufinn-features">
+      <div class="feature-item">
+        <div class="feature-icon">💳</div>
+        <div class="feature-text">
+          <h4>Credit Card Tracking</h4>
+          <p>Due dates, statement dates, annual fees, rewards, and monthly credits — all in one place.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💵</div>
+        <div class="feature-text">
+          <h4>Paycheck Planning</h4>
+          <p>Assign bills, card payments, and recurring expenses to each paycheck so nothing slips through.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔁</div>
+        <div class="feature-text">
+          <h4>Recurring Hub</h4>
+          <p>Subscriptions and fixed monthly bills organized in a single, clear recurring expenses view.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📊</div>
+        <div class="feature-text">
+          <h4>Budget View</h4>
+          <p>Categories, line items, and remaining balances so you always know exactly where you stand.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔔</div>
+        <div class="feature-text">
+          <h4>Smart Alerts</h4>
+          <p>Surfaces upcoming and overdue payments before they become a problem.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-text">
+          <h4>Ask Blufinn</h4>
+          <p>A local assistant that answers your financial questions using only the data inside your app.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="blufinn-differentiators">
+      <h3>What makes it different</h3>
+      <div class="diff-grid">
+        <div class="diff-item">
+          <div class="diff-check">✓</div>
+          <span>Private by design — your data stays local</span>
+        </div>
+        <div class="diff-item">
+          <div class="diff-check">✓</div>
+          <span>No bank connection required</span>
+        </div>
+        <div class="diff-item">
+          <div class="diff-check">✓</div>
+          <span>Built around real-life: cards, bills & paychecks</span>
+        </div>
+        <div class="diff-item">
+          <div class="diff-check">✓</div>
+          <span>Focused on planning & timing, not noise</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="blufinn-cta">
+      <a href="contact.html" class="btn btn-primary">Get Notified at Launch</a>
+      <a href="contact.html" class="btn btn-outline">Contact Us About Blufinn</a>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Services -->
+<section class="services-detailed">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-label">Services</div>
+      <h2>Everything you need<br>to build and grow.</h2>
+      <p>We work with startups, small businesses, and individuals who need technology built right the first time.</p>
+    </div>
+
+    <div class="services-detailed-grid">
+      <div class="card service-detail-card fade-up">
+        <div class="icon-box">💻</div>
+        <h3>IT Consulting</h3>
+        <p class="desc">Strategic technology guidance and infrastructure support. We help you assess your current stack, plan smart upgrades, and solve problems before they slow you down.</p>
+        <div class="service-tags">
+          <span class="tag">Infrastructure</span>
+          <span class="tag">Strategy</span>
+          <span class="tag">Support</span>
+          <span class="tag">Security</span>
+        </div>
+      </div>
+
+      <div class="card service-detail-card fade-up fade-up-delay-1">
+        <div class="icon-box">📱</div>
+        <h3>App Development</h3>
+        <p class="desc">Native iOS and cross-platform mobile apps. We handle the full lifecycle — from wireframe to App Store submission — with clean code and thoughtful UX.</p>
+        <div class="service-tags">
+          <span class="tag">iOS / Swift</span>
+          <span class="tag">React Native</span>
+          <span class="tag">App Store</span>
+          <span class="tag">UX Design</span>
+        </div>
+      </div>
+
+      <div class="card service-detail-card fade-up fade-up-delay-2">
+        <div class="icon-box">🌐</div>
+        <h3>Web Development</h3>
+        <p class="desc">Fast, modern, and accessible websites and web apps. Whether it's a landing page or a full-stack product, we build for performance and longevity.</p>
+        <div class="service-tags">
+          <span class="tag">React</span>
+          <span class="tag">Next.js</span>
+          <span class="tag">HTML/CSS</span>
+          <span class="tag">APIs</span>
+        </div>
+      </div>
+
+      <div class="card service-detail-card fade-up fade-up-delay-3">
+        <div class="icon-box">⚙️</div>
+        <h3>Utility Apps</h3>
+        <p class="desc">Purpose-built tools that solve one problem exceptionally well. We specialize in apps that are focused, lightweight, and deliver real value without the bloat.</p>
+        <div class="service-tags">
+          <span class="tag">Productivity</span>
+          <span class="tag">Finance</span>
+          <span class="tag">Automation</span>
+          <span class="tag">Local-First</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo">Blueey Labs</a>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2025 Blueey Labs, LLC. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

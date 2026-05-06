@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Blueey Labs</title>
+  <meta name="description" content="Get in touch with Blueey Labs for IT consulting, app development, web development, or to learn more about Blufinn." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .contact-section {
+      padding: 40px 24px 100px;
+    }
+
+    .contact-grid {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* ── Left Column ── */
+    .contact-info h2 { margin-bottom: 16px; }
+    .contact-info > p { font-size: 1rem; line-height: 1.75; margin-bottom: 40px; }
+
+    .contact-items { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .contact-item:hover {
+      border-color: var(--border-hover);
+      background: rgba(26,109,255,0.05);
+      transform: translateX(4px);
+    }
+
+    .contact-item-icon {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      background: rgba(26,109,255,0.12);
+      border: 1px solid rgba(26,109,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-item-text { flex: 1; }
+    .contact-item-label { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .contact-item-value { font-size: 0.92rem; color: var(--text-primary); font-weight: 500; margin-top: 2px; }
+
+    .contact-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 32px 0;
+    }
+
+    .services-quick h4 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .services-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .services-list span {
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    /* ── Right Column: Form ── */
+    .contact-form-card {
+      background: rgba(10,22,40,0.6);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px 44px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-form-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(26,109,255,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .form-title { font-size: 1.4rem; margin-bottom: 6px; }
+    .form-subtitle { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 36px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 16px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.92rem;
+      outline: none;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--text-muted); }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--blue);
+      background: rgba(26,109,255,0.06);
+      box-shadow: 0 0 0 3px rgba(26,109,255,0.12);
+    }
+
+    .form-group select option { background: #0A1628; color: var(--text-primary); }
+
+    .form-group textarea { resize: vertical; min-height: 130px; line-height: 1.6; }
+
+    .form-submit {
+      width: 100%;
+      justify-content: center;
+      font-size: 1rem;
+      padding: 16px 28px;
+      margin-top: 8px;
+    }
+
+    .form-note {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 14px;
+    }
+
+    /* ── Success State ── */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 48px 24px;
+    }
+
+    .success-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: rgba(0,212,255,0.12);
+      border: 1px solid rgba(0,212,255,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      margin: 0 auto 24px;
+    }
+
+    .form-success h3 { margin-bottom: 10px; }
+    .form-success p { font-size: 0.9rem; }
+
+    @media (max-width: 900px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-form-card { padding: 36px 28px; }
+    }
+
+    @media (max-width: 560px) {
+      .form-row { grid-template-columns: 1fr; }
+      .contact-form-card { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Blueey Labs</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Page Hero -->
+<div class="page-hero">
+  <div class="container">
+    <div class="section-label fade-up">Let's Talk</div>
+    <h1 class="fade-up fade-up-delay-1">Get In <span class="gradient-text">Touch</span></h1>
+    <p class="fade-up fade-up-delay-2">Have a project, a question, or just want to know more about Blufinn? We're here.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Contact Content -->
+<section class="contact-section">
+  <div class="contact-grid">
+
+    <!-- Left: Info -->
+    <div class="contact-info fade-up">
+      <h2>We'd love to<br><span class="gradient-text">hear from you.</span></h2>
+      <p>Whether you need IT consulting, an app built, or want to be first to know when Blufinn drops — reach out and we'll get back to you.</p>
+
+      <div class="contact-items">
+        <a href="mailto:info@blueeylabs.com" class="contact-item">
+          <div class="contact-item-icon">✉️</div>
+          <div class="contact-item-text">
+            <div class="contact-item-label">Email</div>
+            <div class="contact-item-value">info@blueeylabs.com</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="contact-divider"></div>
+
+      <div class="services-quick">
+        <h4>We can help with</h4>
+        <div class="services-list">
+          <span>IT Consulting</span>
+          <span>App Development</span>
+          <span>Web Development</span>
+          <span>Utility Apps</span>
+          <span>Blufinn</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Form -->
+    <div class="contact-form-card fade-up fade-up-delay-1">
+      <h3 class="form-title">Send us a message</h3>
+      <p class="form-subtitle">We typically respond within 24 hours.</p>
+
+      <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="John Smith" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="john@example.com" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="subject">What can we help with?</label>
+          <select id="subject" name="subject">
+            <option value="" disabled selected>Select a topic...</option>
+            <option value="it-consulting">IT Consulting</option>
+            <option value="app-development">App Development</option>
+            <option value="web-development">Web Development</option>
+            <option value="utility-apps">Utility Apps</option>
+            <option value="blufinn">Blufinn — Notify Me at Launch</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell us about your project or question..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary form-submit">Send Message →</button>
+        <p class="form-note">Your message goes directly to info@blueeylabs.com</p>
+      </form>
+
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon">✓</div>
+        <h3>Message sent!</h3>
+        <p>Thanks for reaching out. We'll get back to you within 24 hours.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo">Blueey Labs</a>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2025 Blueey Labs, LLC. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+  const form = document.getElementById('contactForm');
+  const success = document.getElementById('formSuccess');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          success.style.display = 'block';
+        } else {
+          btn.textContent = 'Send Message →';
+          btn.disabled = false;
+          alert('Something went wrong. Please email us directly at info@blueeylabs.com');
+        }
+      } catch {
+        btn.textContent = 'Send Message →';
+        btn.disabled = false;
+        alert('Something went wrong. Please email us directly at info@blueeylabs.com');
+      }
+    });
+  }
+</script>
+</body>
+</html>
