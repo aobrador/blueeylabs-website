@@ -377,6 +377,204 @@ footer {
   margin-right: auto;
 }
 
+/* ── Scroll Progress Bar ── */
+#scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--gradient);
+  z-index: 200;
+  transition: width 0.1s linear;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ── Hamburger → X ── */
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── Typewriter cursor ── */
+.typewriter-wrap { display: inline; }
+#typewriter { display: inline; }
+.cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.85em;
+  background: var(--cyan);
+  border-radius: 2px;
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* ── Floating Orbs ── */
+.orbs {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.18;
+  animation: float 12s ease-in-out infinite;
+}
+.orb-1 { width: 500px; height: 500px; background: #2563EB; top: -100px; left: -100px; animation-duration: 14s; }
+.orb-2 { width: 350px; height: 350px; background: #00C4FF; top: 30%; right: -80px; animation-duration: 10s; animation-delay: -4s; }
+.orb-3 { width: 300px; height: 300px; background: #2563EB; bottom: 0; left: 30%; animation-duration: 16s; animation-delay: -8s; }
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -40px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+/* ── iPhone Mockup ── */
+.iphone-mockup {
+  position: relative;
+  width: 240px;
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+.iphone-frame {
+  position: relative;
+  width: 240px;
+  background: #0A0F1C;
+  border-radius: 40px;
+  border: 2px solid rgba(255,255,255,0.12);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06),
+    0 40px 80px rgba(0,0,0,0.6),
+    inset 0 0 0 1px rgba(255,255,255,0.04);
+  padding: 14px 10px;
+  overflow: hidden;
+}
+.iphone-notch {
+  width: 80px; height: 22px;
+  background: #0A0F1C;
+  border-radius: 0 0 14px 14px;
+  margin: 0 auto 10px;
+  border: 2px solid rgba(255,255,255,0.1);
+  border-top: none;
+  position: relative; z-index: 2;
+}
+.iphone-screen {
+  border-radius: 24px;
+  overflow: hidden;
+  background: #f0f0f0;
+  aspect-ratio: 9/19.5;
+}
+.iphone-screen img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.iphone-screen-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(160deg, #1a2a4a 0%, #0a1628 100%);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 12px;
+}
+.iphone-screen-placeholder span {
+  font-size: 2rem;
+}
+.iphone-screen-placeholder p {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.4);
+  text-align: center;
+  padding: 0 12px;
+}
+.iphone-btn-side {
+  position: absolute;
+  right: -3px;
+  top: 80px;
+  width: 3px; height: 60px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 0 2px 2px 0;
+}
+.iphone-btn-vol-up {
+  position: absolute;
+  left: -3px; top: 70px;
+  width: 3px; height: 36px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px 0 0 2px;
+}
+.iphone-btn-vol-down {
+  position: absolute;
+  left: -3px; top: 114px;
+  width: 3px; height: 36px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px 0 0 2px;
+}
+
+/* ── Legal Pages ── */
+.legal-content {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 24px 100px;
+}
+.legal-content h2 { font-size: 1.4rem; margin: 40px 0 12px; color: var(--text-primary); }
+.legal-content h3 { font-size: 1rem; margin: 24px 0 8px; color: var(--text-secondary); font-weight: 600; }
+.legal-content p { font-size: 0.92rem; line-height: 1.8; margin-bottom: 12px; }
+.legal-content ul { padding-left: 20px; margin-bottom: 12px; }
+.legal-content ul li { font-size: 0.92rem; line-height: 1.8; color: var(--text-secondary); margin-bottom: 6px; }
+.legal-content a { color: var(--blue-light); text-decoration: none; }
+.legal-content a:hover { text-decoration: underline; }
+.legal-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  padding: 12px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 40px;
+}
+
+/* ── Footer Legal Links ── */
+.footer-inner {
+  align-items: flex-start !important;
+}
+.footer-col { display: flex; flex-direction: column; gap: 12px; }
+.footer-col-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ── 404 Page ── */
+.not-found {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  position: relative; z-index: 1;
+}
+.not-found-inner { max-width: 520px; }
+.not-found-code {
+  font-size: clamp(6rem, 20vw, 10rem);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+.not-found h2 { margin-bottom: 16px; }
+.not-found p { margin-bottom: 36px; }
+.not-found-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .nav-links { display: none; flex-direction: column; gap: 4px; }
@@ -385,13 +583,14 @@ footer {
     position: absolute;
     top: 68px;
     left: 0; right: 0;
-    background: rgba(6, 13, 26, 0.97);
+    background: rgba(10, 15, 28, 0.97);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
     padding: 16px;
   }
   .nav-links.open a { padding: 12px 16px; border-radius: 8px; width: 100%; }
   .hamburger { display: flex; }
-  .footer-inner { flex-direction: column; text-align: center; }
+  .footer-inner { flex-direction: column !important; text-align: center; align-items: center !important; }
   .footer-links { flex-wrap: wrap; justify-content: center; }
+  .footer-col { align-items: center; }
 }

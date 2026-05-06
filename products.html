@@ -208,8 +208,20 @@
   <div class="blufinn-hero-card fade-up">
 
     <div class="blufinn-top">
-      <img src="assets/images/blufinn-icon.png" alt="Blufinn" class="blufinn-icon" />
-      <div class="blufinn-headline">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:20px;">
+        <img src="assets/images/blufinn-icon.png" alt="Blufinn" class="blufinn-icon" />
+        <div class="iphone-mockup">
+          <div class="iphone-frame">
+            <div class="iphone-notch"></div>
+            <div class="iphone-screen">
+              <img src="../assets/images/blufinn-screenshot.png" alt="Blufinn App Screenshot" onerror="this.parentElement.innerHTML='<div class=\'iphone-screen-placeholder\'><span>📱</span><p>Screenshot<br>Coming Soon</p></div>'" />
+            </div>
+            <div class="iphone-btn-side"></div>
+            <div class="iphone-btn-vol-up"></div>
+            <div class="iphone-btn-vol-down"></div>
+          </div>
+        </div>
+      </div>
         <span class="badge badge-cyan"><span class="badge-dot"></span>Coming Soon to App Store</span>
         <h2><span class="gradient-text">Blufinn</span></h2>
         <p class="tagline">Know what's due. Know what's left.</p>
@@ -363,15 +375,34 @@
 <!-- Footer -->
 <footer>
   <div class="footer-inner">
-    <a href="index.html" class="footer-logo"><img src="assets/images/logo.svg" alt="Blueey Labs" height="24" /></a>
-    <ul class="footer-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="products.html">Products</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <div class="footer-copy">
-      <p>© 2026 Blueey Labs, LLC. All rights reserved.</p>
-      <p style="margin-top:6px;">Made with ❤️ in Florida by Blueey Labs</p>
+    <div class="footer-col">
+      <a href="../index.html" class="footer-logo"><img src="assets/images/logo.svg" alt="Blueey Labs" height="24" /></a>
+      <div class="footer-copy">
+        <p>© 2026 Blueey Labs, LLC. All rights reserved.</p>
+        <p style="margin-top:6px;">Made with ❤️ in Florida by Blueey Labs</p>
+      </div>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-label">Navigation</span>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-label">Blufinn</span>
+      <ul class="footer-links">
+        <li><a href="blufinn/terms.html">Terms of Service</a></li>
+        <li><a href="blufinn/privacy.html">Privacy Policy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-label">Legal</span>
+      <ul class="footer-links">
+        <li><a href="legal/terms.html">Terms of Service</a></li>
+        <li><a href="legal/privacy.html">Privacy Policy</a></li>
+      </ul>
     </div>
   </div>
 </footer>
