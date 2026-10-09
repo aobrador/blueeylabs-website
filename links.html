@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blueey Collects — Links</title>
   <meta name="description" content="Blueey Collects — follow along, shop live, and connect with Alejandro." />
+  <meta name="robots" content="noindex" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
@@ -14,16 +15,14 @@
     :root {
       --bg: #0A0F1C;
       --blue: #2563EB;
-      --blue-light: #3B82F6;
       --cyan: #00C4FF;
+      --red: #FF3B5C;
       --gradient: linear-gradient(135deg, #2563EB, #00C4FF);
       --text: #FFFFFF;
       --text-muted: #7A90B8;
       --card: rgba(255,255,255,0.04);
       --border: rgba(255,255,255,0.08);
     }
-
-    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -38,7 +37,6 @@
       overflow-x: hidden;
     }
 
-    /* Background glow */
     body::before {
       content: '';
       position: fixed;
@@ -50,422 +48,405 @@
       z-index: 0;
     }
 
-    .page { width: 100%; max-width: 480px; position: relative; z-index: 1; }
+    .page {
+      width: 100%; max-width: 480px; position: relative; z-index: 1;
+      opacity: 0; transform: translateY(8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .page.ready { opacity: 1; transform: none; }
 
     /* ── Profile ── */
-    .profile {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      margin-bottom: 36px;
-    }
-
-    .avatar-wrap {
-      position: relative;
-      margin-bottom: 18px;
-    }
-
+    .profile { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 8px; }
     .avatar-ring {
-      width: 108px; height: 108px;
-      border-radius: 50%;
-      background: var(--gradient);
-      padding: 3px;
-      display: flex; align-items: center; justify-content: center;
+      width: 108px; height: 108px; border-radius: 50%;
+      background: var(--gradient); padding: 3px; margin-bottom: 18px;
     }
-
-    .avatar {
-      width: 100%; height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      background: var(--bg);
-      display: block;
-    }
-
     .avatar-inner {
-      width: 100%; height: 100%;
-      border-radius: 50%;
-      background: #0A0F1C;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
+      width: 100%; height: 100%; border-radius: 50%; background: var(--bg);
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
     }
+    .avatar-inner img { width: 82%; height: 82%; object-fit: contain; mix-blend-mode: screen; }
 
-    .avatar-inner img {
-      width: 82%; height: 82%;
-      object-fit: contain;
-      mix-blend-mode: screen;
-    }
-
-    .profile-name {
-      font-size: 1.5rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 4px;
-    }
-
-    .profile-handle {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      font-weight: 500;
-      margin-bottom: 12px;
-    }
-
-    .profile-bio {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-      text-align: center;
-      max-width: 300px;
-    }
-
-    .profile-bio strong {
-      color: var(--cyan);
-      font-weight: 700;
-    }
-
-    .social-icons {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      margin-top: 18px;
-    }
-
-    .social-icon {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      text-decoration: none;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    .social-icon:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-    }
-
-    .social-icon.si-instagram {
-      background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
-    }
-
-    .social-icon.si-whatnot {
-      background: none;
-      padding: 0;
-    }
-
-    .social-icon.si-whatnot img {
-      width: 44px; height: 44px;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-
-    .social-icon.si-tcgplayer { background: #FFFFFF; padding: 4px; }
-    .social-icon.si-ebay      { background: #FFFFFF; padding: 0; }
-
-    .social-icon.si-tcgplayer img {
-      width: 100%; height: 100%;
-      object-fit: contain;
-      display: block;
-    }
-
-    .social-icon.si-ebay img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .social-icon svg { width: 22px; height: 22px; }
-
+    .profile-name { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .profile-handle { font-size: 0.88rem; color: var(--text-muted); font-weight: 500; margin-bottom: 12px; }
     .profile-handle span {
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      background: var(--gradient); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text;
     }
+    .profile-bio { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; max-width: 320px; }
+    .profile-bio strong { color: var(--cyan); font-weight: 700; }
+
+    /* ── Quick icons ── */
+    .social-icons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
+    .social-icon {
+      width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; overflow: hidden; flex-shrink: 0;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .social-icon:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+    .social-icon svg { width: 22px; height: 22px; }
+    .social-icon img { width: 100%; height: 100%; display: block; }
+    .social-icon.pad img { padding: 4px; object-fit: contain; }
+    .social-icon.fill img { object-fit: cover; }
 
     /* ── Section label ── */
     .section-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin: 28px 0 10px;
-      width: 100%;
-      padding-left: 4px;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted); margin: 28px 0 10px; padding-left: 4px;
     }
+
+    /* ── Next show card ── */
+    .show-card {
+      display: block; text-decoration: none; color: var(--text);
+      margin-top: 28px; padding: 18px 20px; border-radius: 16px;
+      background: linear-gradient(135deg, rgba(37,99,235,0.18), rgba(0,196,255,0.06));
+      border: 1px solid rgba(37,99,235,0.35);
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+    .show-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,99,235,0.25); }
+    .show-card.live {
+      background: linear-gradient(135deg, rgba(255,59,92,0.22), rgba(255,59,92,0.05));
+      border-color: rgba(255,59,92,0.5);
+    }
+    .show-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+    .show-kicker {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan);
+    }
+    .show-card.live .show-kicker { color: var(--red); }
+    .pulse { width: 8px; height: 8px; border-radius: 50%; background: currentColor; position: relative; }
+    .pulse::after {
+      content: ''; position: absolute; inset: 0; border-radius: 50%; background: currentColor;
+      animation: pulse 1.6s ease-out infinite;
+    }
+    @keyframes pulse { from { transform: scale(1); opacity: 0.7; } to { transform: scale(2.8); opacity: 0; } }
+    .show-countdown {
+      font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 100px;
+      background: rgba(255,255,255,0.08); color: var(--text); white-space: nowrap;
+    }
+    .show-card.live .show-countdown { background: var(--red); }
+    .show-title { font-size: 1.08rem; font-weight: 700; margin-bottom: 4px; }
+    .show-when { font-size: 0.85rem; color: var(--text-muted); }
+    .show-cta { margin-top: 12px; font-size: 0.82rem; font-weight: 600; color: var(--cyan); }
+    .show-card.live .show-cta { color: #FF8FA3; }
+
+    /* ── Featured card ── */
+    .featured-card {
+      overflow: hidden; border-radius: 16px; background: var(--card); border: 1px solid var(--border);
+    }
+    .featured-card img { width: 100%; max-height: 420px; object-fit: cover; display: block; background: #000; }
+    .featured-body { padding: 16px 20px 20px; }
+    .featured-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
+    .featured-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px; }
+    .featured-btn {
+      display: block; text-align: center; text-decoration: none; color: #fff;
+      padding: 12px 16px; border-radius: 12px; font-weight: 700; font-size: 0.92rem;
+      background: var(--gradient); box-shadow: 0 4px 20px rgba(37,99,235,0.3);
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    .featured-btn:hover { box-shadow: 0 8px 32px rgba(37,99,235,0.5); transform: translateY(-1px); }
 
     /* ── Link buttons ── */
     .link-btn {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      width: 100%;
-      padding: 16px 20px;
-      margin-bottom: 10px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      text-decoration: none;
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.97rem;
-      font-weight: 600;
-      cursor: pointer;
+      display: flex; align-items: center; gap: 14px; width: 100%;
+      padding: 16px 20px; margin-bottom: 10px;
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      text-decoration: none; color: var(--text); font-size: 0.97rem; font-weight: 600;
       transition: all 0.22s ease;
-      position: relative;
-      overflow: hidden;
     }
-
-    .link-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(37,99,235,0.08), transparent);
-      opacity: 0;
-      transition: opacity 0.22s ease;
-    }
-
     .link-btn:hover {
-      border-color: rgba(37,99,235,0.4);
-      transform: translateY(-2px);
+      border-color: rgba(37,99,235,0.4); transform: translateY(-2px);
       box-shadow: 0 8px 30px rgba(37,99,235,0.2);
     }
-
-    .link-btn:hover::before { opacity: 1; }
     .link-btn:active { transform: translateY(0); }
-
-    .link-btn.primary {
-      background: var(--gradient);
-      border-color: transparent;
-      box-shadow: 0 4px 20px rgba(37,99,235,0.3);
-    }
-
-    .link-btn.primary:hover {
-      box-shadow: 0 8px 32px rgba(37,99,235,0.5);
-      border-color: transparent;
-    }
-
-    .link-btn.primary::before { display: none; }
-
-    .link-btn.placeholder {
-      opacity: 0.45;
-      cursor: default;
-      pointer-events: none;
-    }
+    .link-btn.primary { background: var(--gradient); border-color: transparent; box-shadow: 0 4px 20px rgba(37,99,235,0.3); }
+    .link-btn.primary:hover { box-shadow: 0 8px 32px rgba(37,99,235,0.5); }
 
     .btn-icon {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      font-size: 1.2rem;
+      width: 40px; height: 40px; border-radius: 10px; overflow: hidden;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-
-    .link-btn.primary .btn-icon {
-      background: rgba(255,255,255,0.2);
-    }
-
-    .btn-icon.bg-instagram { background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%); }
-    .btn-icon.bg-whatnot   { background: #7B2FFF; }
-    .btn-icon.bg-cashapp   { background: #00D632; }
-    .btn-icon.bg-venmo     { background: #008CFF; }
-    .btn-icon.bg-email     { background: rgba(37,99,235,0.25); border: 1px solid rgba(37,99,235,0.3); }
-    .btn-icon.bg-web       { background: rgba(0,196,255,0.15); border: 1px solid rgba(0,196,255,0.2); }
-
     .btn-icon svg { width: 22px; height: 22px; display: block; }
+    .btn-icon img { width: 100%; height: 100%; display: block; }
+    .btn-icon.pad img { padding: 4px; object-fit: contain; }
+    .btn-icon.fill img { object-fit: cover; }
 
-    .btn-text { flex: 1; text-align: left; }
-    .btn-label { display: block; line-height: 1; }
-    .btn-sub {
-      display: block;
-      font-size: 0.75rem;
-      font-weight: 400;
-      color: var(--text-muted);
-      margin-top: 3px;
-    }
-    .link-btn.primary .btn-sub { color: rgba(255,255,255,0.7); }
-
-    .btn-arrow {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      transition: transform 0.2s;
-    }
+    .btn-text { flex: 1; min-width: 0; }
+    .btn-label { display: block; line-height: 1.2; }
+    .btn-sub { display: block; font-size: 0.75rem; font-weight: 400; color: var(--text-muted); margin-top: 3px; }
+    .link-btn.primary .btn-sub { color: rgba(255,255,255,0.75); }
+    .btn-arrow { color: var(--text-muted); font-size: 0.9rem; transition: transform 0.2s; }
     .link-btn:hover .btn-arrow { transform: translateX(3px); }
-    .link-btn.primary .btn-arrow { color: rgba(255,255,255,0.6); }
-
-    .coming-soon-tag {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      background: rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.5);
-      padding: 3px 8px;
-      border-radius: 6px;
-    }
+    .link-btn.primary .btn-arrow { color: rgba(255,255,255,0.7); }
 
     /* ── Footer ── */
-    .links-footer {
-      margin-top: 44px;
-      text-align: center;
-    }
-
+    .links-footer { margin-top: 44px; text-align: center; }
     .links-footer a {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      text-decoration: none;
-      color: var(--text-muted);
-      font-size: 0.78rem;
-      transition: color 0.2s;
+      display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
+      color: var(--text-muted); font-size: 0.78rem; transition: color 0.2s;
     }
-
     .links-footer a:hover { color: var(--text); }
+    .links-footer img { height: 16px; opacity: 0.5; }
 
-    .footer-logo-small {
-      height: 16px;
-      opacity: 0.5;
-      transition: opacity 0.2s;
-    }
-
-    .links-footer a:hover .footer-logo-small { opacity: 0.8; }
+    .error-msg { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 24px; }
+    .error-msg a { color: var(--cyan); }
   </style>
 </head>
 <body>
-<div class="page">
+<div class="page" id="page">
 
-  <!-- Profile -->
   <div class="profile">
-    <div class="avatar-wrap">
-      <div class="avatar-ring">
-        <div class="avatar-inner">
-          <img src="assets/images/blueey-collects-logo.webp" alt="Blueey Collects" />
-        </div>
+    <div class="avatar-ring">
+      <div class="avatar-inner">
+        <img src="assets/images/blueey-collects-logo.webp" alt="Blueey Collects" />
       </div>
     </div>
-    <h1 class="profile-name">Blueey Collects</h1>
-    <p class="profile-handle">Alejandro &nbsp;·&nbsp; <span>@blueeycollects</span></p>
-    <p class="profile-bio">Lorcana Collector &nbsp;·&nbsp; Collect, Buy, Sell &amp; Trade<br>🃏 <strong>Always Buying!</strong> &nbsp;·&nbsp; 📍 Orlando, FL</p>
-
-    <div class="social-icons">
-      <a href="https://www.instagram.com/blueeycollects/" target="_blank" rel="noopener" class="social-icon si-instagram" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/>
-          <circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/>
-          <circle cx="17.5" cy="6.5" r="1.5" fill="white"/>
-        </svg>
-      </a>
-      <a href="https://www.whatnot.com/user/blueeytv/shows" target="_blank" rel="noopener" class="social-icon si-whatnot" aria-label="Whatnot">
-        <img src="assets/images/whatnot-logo.png" alt="Whatnot" />
-      </a>
-      <a href="https://www.tcgplayer.com/sellers/Blueey-Labs/9c25921c?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" rel="noopener" class="social-icon si-tcgplayer" aria-label="TCGPlayer">
-        <img src="assets/images/tcgplayer-logo.png" alt="TCGPlayer" />
-      </a>
-      <a href="https://ebay.io/m/PekpHV" target="_blank" rel="noopener" class="social-icon si-ebay" aria-label="eBay">
-        <img src="assets/images/ebay-logo.webp" alt="eBay" />
-      </a>
-    </div>
+    <h1 class="profile-name" id="name">Blueey Collects</h1>
+    <p class="profile-handle" id="handle"></p>
+    <p class="profile-bio" id="bio"></p>
+    <div class="social-icons" id="quick-icons"></div>
   </div>
 
-  <!-- Shop & Follow -->
-  <div class="section-label">Shop &amp; Follow</div>
+  <div id="next-show"></div>
+  <div id="featured"></div>
+  <div id="sections"></div>
 
-  <a href="https://www.instagram.com/blueeycollects/" target="_blank" rel="noopener" class="link-btn">
-    <div class="btn-icon bg-instagram">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/>
-        <circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/>
-        <circle cx="17.5" cy="6.5" r="1.5" fill="white"/>
-      </svg>
-    </div>
-    <div class="btn-text">
-      <span class="btn-label">Instagram — @blueeycollects</span>
-      <span class="btn-sub">Updates, content, sales &amp; more — let's connect!</span>
-    </div>
-    <span class="btn-arrow">→</span>
-  </a>
+  <noscript>
+    <p class="error-msg">Find me on <a href="https://www.instagram.com/blueeycollects/">Instagram</a> and <a href="https://www.whatnot.com/user/blueeytv/shows">Whatnot</a>.</p>
+  </noscript>
 
-  <a href="https://www.whatnot.com/user/blueeytv/shows" target="_blank" rel="noopener" class="link-btn primary">
-    <div class="btn-icon" style="background:none;border-radius:10px;overflow:hidden;">
-      <img src="assets/images/whatnot-logo.png" alt="Whatnot" style="width:40px;height:40px;object-fit:cover;border-radius:10px;display:block;" />
-    </div>
-    <div class="btn-text">
-      <span class="btn-label">Whatnot — LIVE every week!</span>
-      <span class="btn-sub">Tune in &amp; shop live @ blueeytv</span>
-    </div>
-    <span class="btn-arrow">→</span>
-  </a>
-
-  <!-- Pay Me -->
-  <div class="section-label">Pay Me</div>
-
-  <a href="https://cash.app/$AlejandroObrador" target="_blank" rel="noopener" class="link-btn">
-    <div class="btn-icon bg-cashapp">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16.7 8.3c-.4-1.7-1.8-2.8-3.7-3V4h-2v1.3C9 5.6 7.3 7 7.3 9c0 2.1 1.5 3.2 4.2 3.8 1.9.5 2.5 1 2.5 1.9 0 1-.9 1.6-2.3 1.6-1.6 0-2.7-.7-3.1-2H6.3c.4 2 1.9 3.2 4 3.5V19h2v-1.2c2.2-.3 3.8-1.7 3.8-3.8 0-2.2-1.5-3.3-4.3-3.9-1.8-.4-2.4-.9-2.4-1.7 0-.9.8-1.5 2.1-1.5 1.4 0 2.4.6 2.7 1.7h2.5z" fill="white"/>
-      </svg>
-    </div>
-    <div class="btn-text">
-      <span class="btn-label">Cash App</span>
-      <span class="btn-sub">$AlejandroObrador</span>
-    </div>
-    <span class="btn-arrow">→</span>
-  </a>
-
-  <a href="https://venmo.com/u/Aobrador" target="_blank" rel="noopener" class="link-btn">
-    <div class="btn-icon bg-venmo">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M19.5 3.5c.6 1 .9 2.1.9 3.5 0 4.3-3.7 9.9-6.7 13.8H7.5L4.5 3.9l5.7-.5 1.5 12.2c1.4-2.3 3.1-5.9 3.1-8.3 0-1.3-.2-2.3-.6-3.1L19.5 3.5z" fill="white"/>
-      </svg>
-    </div>
-    <div class="btn-text">
-      <span class="btn-label">Venmo</span>
-      <span class="btn-sub">@Aobrador</span>
-    </div>
-    <span class="btn-arrow">→</span>
-  </a>
-
-  <!-- Contact -->
-  <div class="section-label">Contact</div>
-
-  <a href="mailto:info@blueeylabs.com" class="link-btn">
-    <div class="btn-icon bg-email">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="2" y="4" width="20" height="16" rx="3" stroke="white" stroke-width="2"/>
-        <path d="M2 8l10 6 10-6" stroke="white" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <div class="btn-text">
-      <span class="btn-label">Email</span>
-      <span class="btn-sub">info@blueeylabs.com</span>
-    </div>
-    <span class="btn-arrow">→</span>
-  </a>
-
-  <a href="https://blueeylabs.com" class="link-btn">
-    <div class="btn-icon bg-web">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="12" cy="12" r="9" stroke="white" stroke-width="2"/>
-        <path d="M12 3c-2.5 3-4 5.5-4 9s1.5 6 4 9M12 3c2.5 3 4 5.5 4 9s-1.5 6-4 9M3 12h18" stroke="white" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <div class="btn-text">
-      <span class="btn-label">Website</span>
-      <span class="btn-sub">blueeylabs.com</span>
-    </div>
-    <span class="btn-arrow">→</span>
-  </a>
-
-  <!-- Footer -->
   <div class="links-footer">
     <a href="https://blueeylabs.com">
-      <img src="assets/images/logo.svg" alt="Blueey Labs" class="footer-logo-small" />
+      <img src="assets/images/logo.svg" alt="" />
       Built by Blueey Labs
     </a>
   </div>
-
 </div>
+
+<script>
+(function () {
+  var SVG = {
+    instagram: '<svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="white"/></svg>',
+    cashapp: '<svg viewBox="0 0 24 24"><path d="M16.7 8.3c-.4-1.7-1.8-2.8-3.7-3V4h-2v1.3C9 5.6 7.3 7 7.3 9c0 2.1 1.5 3.2 4.2 3.8 1.9.5 2.5 1 2.5 1.9 0 1-.9 1.6-2.3 1.6-1.6 0-2.7-.7-3.1-2H6.3c.4 2 1.9 3.2 4 3.5V19h2v-1.2c2.2-.3 3.8-1.7 3.8-3.8 0-2.2-1.5-3.3-4.3-3.9-1.8-.4-2.4-.9-2.4-1.7 0-.9.8-1.5 2.1-1.5 1.4 0 2.4.6 2.7 1.7h2.5z" fill="white"/></svg>',
+    venmo: '<svg viewBox="0 0 24 24"><path d="M19.5 3.5c.6 1 .9 2.1.9 3.5 0 4.3-3.7 9.9-6.7 13.8H7.5L4.5 3.9l5.7-.5 1.5 12.2c1.4-2.3 3.1-5.9 3.1-8.3 0-1.3-.2-2.3-.6-3.1L19.5 3.5z" fill="white"/></svg>',
+    email: '<svg viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="white" stroke-width="2"/><path d="M2 8l10 6 10-6" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>',
+    website: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="2"/><path d="M12 3c-2.5 3-4 5.5-4 9s1.5 6 4 9M12 3c2.5 3 4 5.5 4 9s-1.5 6-4 9M3 12h18" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>',
+    link: '<svg viewBox="0 0 24 24" fill="none"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>'
+  };
+
+  var ICONS = {
+    instagram: { bg: 'linear-gradient(135deg,#833ab4 0%,#fd1d1d 50%,#fcb045 100%)', svg: SVG.instagram, name: 'Instagram' },
+    whatnot:   { bg: 'transparent', img: 'assets/images/whatnot-logo.png', fit: 'fill', name: 'Whatnot' },
+    tcgplayer: { bg: '#FFFFFF', img: 'assets/images/tcgplayer-logo.png', fit: 'pad', name: 'TCGPlayer' },
+    ebay:      { bg: '#FFFFFF', img: 'assets/images/ebay-logo.webp', fit: 'fill', name: 'eBay' },
+    cashapp:   { bg: '#00D632', svg: SVG.cashapp, name: 'Cash App' },
+    venmo:     { bg: '#008CFF', svg: SVG.venmo, name: 'Venmo' },
+    email:     { bg: 'rgba(37,99,235,0.25)', svg: SVG.email, name: 'Email' },
+    website:   { bg: 'rgba(0,196,255,0.15)', svg: SVG.website, name: 'Website' },
+    link:      { bg: 'rgba(255,255,255,0.08)', svg: SVG.link, name: 'Link' }
+  };
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text) n.textContent = text;
+    return n;
+  }
+
+  function safeUrl(u) {
+    if (typeof u !== 'string') return null;
+    u = u.trim();
+    return /^(https?:|mailto:)/i.test(u) ? u : null;
+  }
+
+  function safeImg(u) {
+    if (typeof u !== 'string' || !u.trim()) return null;
+    u = u.trim();
+    return /^(https:\/\/|\/|assets\/)/i.test(u) ? u : null;
+  }
+
+  function anchor(url, cls) {
+    var a = el('a', cls);
+    a.href = url;
+    if (!/^mailto:/i.test(url) && url.indexOf('blueeylabs.com') === -1) {
+      a.target = '_blank';
+      a.rel = 'noopener';
+    }
+    return a;
+  }
+
+  function iconBox(type, cls) {
+    var spec = ICONS[type] || ICONS.link;
+    var box = el(cls === 'social-icon' ? 'span' : 'div', cls);
+    box.style.background = spec.bg;
+    if (spec.img) {
+      box.classList.add(spec.fit);
+      var img = el('img');
+      img.src = spec.img;
+      img.alt = '';
+      box.appendChild(img);
+    } else {
+      box.innerHTML = spec.svg;
+    }
+    return box;
+  }
+
+  function richLine(text) {
+    var frag = document.createDocumentFragment();
+    String(text).split(/(\*\*[^*]+\*\*)/).forEach(function (part) {
+      if (/^\*\*[^*]+\*\*$/.test(part)) frag.appendChild(el('strong', null, part.slice(2, -2)));
+      else if (part) frag.appendChild(document.createTextNode(part));
+    });
+    return frag;
+  }
+
+  function renderProfile(p) {
+    if (!p) return;
+    if (p.name) document.getElementById('name').textContent = p.name;
+    var handle = document.getElementById('handle');
+    if (p.owner) handle.appendChild(document.createTextNode(p.owner + '  ·  '));
+    if (p.handle) handle.appendChild(el('span', null, p.handle));
+    var bio = document.getElementById('bio');
+    (p.bio || []).forEach(function (line, i) {
+      if (i) bio.appendChild(el('br'));
+      bio.appendChild(richLine(line));
+    });
+  }
+
+  function renderQuickIcons(list) {
+    var wrap = document.getElementById('quick-icons');
+    (list || []).forEach(function (item) {
+      var url = safeUrl(item.url);
+      if (!url) return;
+      var a = anchor(url, '');
+      var box = iconBox(item.type, 'social-icon');
+      a.className = box.className;
+      a.style.background = box.style.background;
+      a.setAttribute('aria-label', (ICONS[item.type] || ICONS.link).name);
+      while (box.firstChild) a.appendChild(box.firstChild);
+      wrap.appendChild(a);
+    });
+  }
+
+  function formatWhen(d) {
+    var day = d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+    var time = d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' });
+    return day + ' · ' + time;
+  }
+
+  function countdown(ms) {
+    var m = Math.floor(ms / 60000);
+    var d = Math.floor(m / 1440), h = Math.floor((m % 1440) / 60), min = m % 60;
+    if (d > 0) return 'in ' + d + 'd ' + h + 'h';
+    if (h > 0) return 'in ' + h + 'h ' + min + 'm';
+    return 'in ' + Math.max(min, 1) + 'm';
+  }
+
+  var LIVE_WINDOW_MS = 3 * 60 * 60 * 1000;
+
+  function renderShow(s) {
+    var host = document.getElementById('next-show');
+    if (!s || !s.enabled || !s.datetime) return;
+    var start = new Date(s.datetime);
+    var url = safeUrl(s.url);
+    if (isNaN(start) || !url) return;
+
+    var card = anchor(url, 'show-card');
+    var top = el('div', 'show-top');
+    var kicker = el('span', 'show-kicker');
+    kicker.appendChild(el('span', 'pulse'));
+    var kickerText = el('span');
+    kicker.appendChild(kickerText);
+    var badge = el('span', 'show-countdown');
+    top.appendChild(kicker);
+    top.appendChild(badge);
+    card.appendChild(top);
+    card.appendChild(el('div', 'show-title', s.title || 'Live on Whatnot'));
+    card.appendChild(el('div', 'show-when', formatWhen(start)));
+    var cta = el('div', 'show-cta');
+    card.appendChild(cta);
+    host.appendChild(card);
+
+    function tick() {
+      var diff = start - Date.now();
+      if (diff <= -LIVE_WINDOW_MS) { host.innerHTML = ''; return false; }
+      var live = diff <= 0;
+      card.classList.toggle('live', live);
+      kickerText.textContent = live ? 'Live now' : 'Next show';
+      badge.textContent = live ? 'LIVE' : countdown(diff);
+      cta.textContent = live ? 'Join the show →' : 'Save the show on Whatnot →';
+      return true;
+    }
+    if (tick()) {
+      var timer = setInterval(function () { if (!tick()) clearInterval(timer); }, 30000);
+    }
+  }
+
+  function renderFeatured(f) {
+    if (!f || !f.enabled || !(f.title || f.image)) return;
+    var host = document.getElementById('featured');
+    host.appendChild(el('div', 'section-label', f.label || 'Featured'));
+    var card = el('div', 'featured-card');
+    var img = safeImg(f.image);
+    if (img) {
+      var i = el('img');
+      i.src = img;
+      i.alt = f.title || '';
+      i.loading = 'lazy';
+      card.appendChild(i);
+    }
+    var body = el('div', 'featured-body');
+    if (f.title) body.appendChild(el('div', 'featured-title', f.title));
+    if (f.description) body.appendChild(el('p', 'featured-desc', f.description));
+    var btnUrl = safeUrl(f.buttonUrl);
+    if (btnUrl) {
+      var btn = anchor(btnUrl, 'featured-btn');
+      btn.textContent = f.buttonText || 'Learn more';
+      body.appendChild(btn);
+    }
+    card.appendChild(body);
+    host.appendChild(card);
+  }
+
+  function renderSections(sections) {
+    var host = document.getElementById('sections');
+    (sections || []).forEach(function (sec) {
+      var links = (sec.links || []).filter(function (l) { return safeUrl(l.url); });
+      if (!links.length) return;
+      if (sec.title) host.appendChild(el('div', 'section-label', sec.title));
+      links.forEach(function (l) {
+        var a = anchor(safeUrl(l.url), 'link-btn' + (l.highlight ? ' primary' : ''));
+        a.appendChild(iconBox(l.type, 'btn-icon'));
+        var text = el('div', 'btn-text');
+        text.appendChild(el('span', 'btn-label', l.label || (ICONS[l.type] || ICONS.link).name));
+        if (l.sub) text.appendChild(el('span', 'btn-sub', l.sub));
+        a.appendChild(text);
+        a.appendChild(el('span', 'btn-arrow', '→'));
+        host.appendChild(a);
+      });
+    });
+  }
+
+  var page = document.getElementById('page');
+  fetch('links.json', { cache: 'no-cache' })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (data) {
+      renderProfile(data.profile);
+      renderQuickIcons(data.quickIcons);
+      renderShow(data.nextShow);
+      renderFeatured(data.featured);
+      renderSections(data.sections);
+    })
+    .catch(function () {
+      var msg = el('p', 'error-msg', 'Links are taking a second to load. Refresh, or find me on ');
+      var ig = el('a', null, 'Instagram');
+      ig.href = 'https://www.instagram.com/blueeycollects/';
+      msg.appendChild(ig);
+      document.getElementById('sections').appendChild(msg);
+    })
+    .then(function () { page.classList.add('ready'); });
+})();
+</script>
 </body>
 </html>

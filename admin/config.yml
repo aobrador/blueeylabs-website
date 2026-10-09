@@ -1,0 +1,81 @@
+backend:
+  name: github
+  repo: aobrador/blueeylabs-website
+  branch: main
+  commit_messages:
+    update: "Update links page via editor"
+    uploadMedia: "Upload {{path}} via editor"
+
+media_folder: assets/images/uploads
+public_folder: /assets/images/uploads
+
+collections:
+  - name: links
+    label: Links Page
+    editor:
+      preview: false
+    files:
+      - name: links
+        label: Links Page (blueeylabs.com/links)
+        file: links.json
+        format: json
+        fields:
+          - label: Profile
+            name: profile
+            widget: object
+            fields:
+              - { label: Name, name: name, widget: string }
+              - { label: Your name, name: owner, widget: string }
+              - { label: Handle, name: handle, widget: string }
+              - label: Bio lines
+                name: bio
+                widget: list
+                hint: "One line per item. Wrap words in **double stars** to make them bold blue."
+                field: { label: Line, name: line, widget: string }
+
+          - label: Next Show
+            name: nextShow
+            widget: object
+            hint: "The card hides itself 3 hours after the start time."
+            fields:
+              - { label: Show the card, name: enabled, widget: boolean, default: true }
+              - { label: Show title, name: title, widget: string }
+              - { label: Start date & time, name: datetime, widget: datetime }
+              - { label: Show link, name: url, widget: string }
+
+          - label: Featured Pull
+            name: featured
+            widget: object
+            fields:
+              - { label: Show the card, name: enabled, widget: boolean, default: false }
+              - { label: Section label, name: label, widget: string, default: "Pull of the Week" }
+              - { label: Title, name: title, widget: string, required: false }
+              - { label: Description, name: description, widget: text, required: false }
+              - { label: Photo, name: image, widget: image, required: false }
+              - { label: Button text, name: buttonText, widget: string, required: false }
+              - { label: Button link, name: buttonUrl, widget: string, required: false }
+
+          - label: Quick Icons (top row)
+            name: quickIcons
+            widget: list
+            summary: "{{fields.type}}"
+            fields:
+              - { label: Type, name: type, widget: select, options: ["instagram", "whatnot", "tcgplayer", "ebay", "cashapp", "venmo", "email", "website", "link"] }
+              - { label: Link, name: url, widget: string }
+
+          - label: Sections
+            name: sections
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { label: Section title, name: title, widget: string }
+              - label: Buttons
+                name: links
+                widget: list
+                summary: "{{fields.label}}"
+                fields:
+                  - { label: Icon, name: type, widget: select, options: ["instagram", "whatnot", "tcgplayer", "ebay", "cashapp", "venmo", "email", "website", "link"] }
+                  - { label: Title, name: label, widget: string }
+                  - { label: Subtitle, name: sub, widget: string, required: false }
+                  - { label: Link, name: url, widget: string }
+                  - { label: Highlight (blue gradient), name: highlight, widget: boolean, default: false }

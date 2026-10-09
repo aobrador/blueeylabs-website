@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /links
+Disallow: /admin
 
 Sitemap: https://blueeylabs.com/sitemap.xml

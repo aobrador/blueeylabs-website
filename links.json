@@ -1,0 +1,103 @@
+{
+  "profile": {
+    "name": "Blueey Collects",
+    "owner": "Alejandro",
+    "handle": "@blueeycollects",
+    "bio": [
+      "Lorcana Collector · Collect, Buy, Sell & Trade",
+      "🃏 **Always Buying!** · 📍 Orlando, FL"
+    ]
+  },
+  "nextShow": {
+    "enabled": false,
+    "title": "Lorcana Breaks & Singles",
+    "datetime": "2026-10-16T20:00:00-04:00",
+    "url": "https://www.whatnot.com/user/blueeytv/shows"
+  },
+  "featured": {
+    "enabled": false,
+    "label": "Pull of the Week",
+    "title": "",
+    "description": "",
+    "image": "",
+    "buttonText": "DM me on Instagram",
+    "buttonUrl": "https://ig.me/m/blueeycollects"
+  },
+  "quickIcons": [
+    {
+      "type": "instagram",
+      "url": "https://www.instagram.com/blueeycollects/"
+    },
+    {
+      "type": "whatnot",
+      "url": "https://www.whatnot.com/user/blueeytv/shows"
+    },
+    {
+      "type": "tcgplayer",
+      "url": "https://www.tcgplayer.com/sellers/Blueey-Labs/9c25921c?utm_source=ig&utm_medium=social&utm_content=link_in_bio"
+    },
+    {
+      "type": "ebay",
+      "url": "https://ebay.io/m/PekpHV"
+    }
+  ],
+  "sections": [
+    {
+      "title": "Shop & Follow",
+      "links": [
+        {
+          "type": "instagram",
+          "label": "Instagram — @blueeycollects",
+          "sub": "Updates, content, sales & more — let's connect!",
+          "url": "https://www.instagram.com/blueeycollects/",
+          "highlight": false
+        },
+        {
+          "type": "whatnot",
+          "label": "Whatnot — LIVE every week!",
+          "sub": "Tune in & shop live @ blueeytv",
+          "url": "https://www.whatnot.com/user/blueeytv/shows",
+          "highlight": true
+        }
+      ]
+    },
+    {
+      "title": "Pay Me",
+      "links": [
+        {
+          "type": "cashapp",
+          "label": "Cash App",
+          "sub": "$AlejandroObrador",
+          "url": "https://cash.app/$AlejandroObrador",
+          "highlight": false
+        },
+        {
+          "type": "venmo",
+          "label": "Venmo",
+          "sub": "@Aobrador",
+          "url": "https://venmo.com/u/Aobrador",
+          "highlight": false
+        }
+      ]
+    },
+    {
+      "title": "Contact",
+      "links": [
+        {
+          "type": "email",
+          "label": "Email",
+          "sub": "info@blueeylabs.com",
+          "url": "mailto:info@blueeylabs.com",
+          "highlight": false
+        },
+        {
+          "type": "website",
+          "label": "Website",
+          "sub": "blueeylabs.com",
+          "url": "https://blueeylabs.com",
+          "highlight": false
+        }
+      ]
+    }
+  ]
+}
