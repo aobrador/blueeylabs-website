@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blueey Collects — Links</title>
+  <meta name="description" content="Blueey Collects — follow along, shop live, and connect with Alejandro." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0A0F1C;
+      --blue: #2563EB;
+      --blue-light: #3B82F6;
+      --cyan: #00C4FF;
+      --gradient: linear-gradient(135deg, #2563EB, #00C4FF);
+      --text: #FFFFFF;
+      --text-muted: #7A90B8;
+      --card: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 20px 64px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Background glow */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(37,99,235,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(0,196,255,0.08) 0%, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page { width: 100%; max-width: 480px; position: relative; z-index: 1; }
+
+    /* ── Profile ── */
+    .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .avatar-wrap {
+      position: relative;
+      margin-bottom: 18px;
+    }
+
+    .avatar-ring {
+      width: 108px; height: 108px;
+      border-radius: 50%;
+      background: var(--gradient);
+      padding: 3px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .avatar {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--bg);
+      display: block;
+    }
+
+    .avatar-inner {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: #0e1628;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    .avatar-inner img {
+      width: 90%; height: 90%;
+      object-fit: contain;
+    }
+
+    .profile-name {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .profile-handle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .profile-handle span {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Section label ── */
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin: 28px 0 10px;
+      width: 100%;
+      padding-left: 4px;
+    }
+
+    /* ── Link buttons ── */
+    .link-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      padding: 16px 20px;
+      margin-bottom: 10px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.97rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(37,99,235,0.08), transparent);
+      opacity: 0;
+      transition: opacity 0.22s ease;
+    }
+
+    .link-btn:hover {
+      border-color: rgba(37,99,235,0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(37,99,235,0.2);
+    }
+
+    .link-btn:hover::before { opacity: 1; }
+    .link-btn:active { transform: translateY(0); }
+
+    .link-btn.primary {
+      background: var(--gradient);
+      border-color: transparent;
+      box-shadow: 0 4px 20px rgba(37,99,235,0.3);
+    }
+
+    .link-btn.primary:hover {
+      box-shadow: 0 8px 32px rgba(37,99,235,0.5);
+      border-color: transparent;
+    }
+
+    .link-btn.primary::before { display: none; }
+
+    .link-btn.placeholder {
+      opacity: 0.45;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .btn-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.2rem;
+    }
+
+    .link-btn.primary .btn-icon {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .btn-icon.bg-instagram { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); }
+    .btn-icon.bg-whatnot   { background: linear-gradient(135deg, #7c3aed, #a855f7); }
+    .btn-icon.bg-cashapp   { background: #00D632; }
+    .btn-icon.bg-venmo     { background: #3D95CE; }
+    .btn-icon.bg-email     { background: rgba(37,99,235,0.25); border: 1px solid rgba(37,99,235,0.3); }
+    .btn-icon.bg-web       { background: rgba(0,196,255,0.15); border: 1px solid rgba(0,196,255,0.2); }
+
+    .btn-text { flex: 1; text-align: left; }
+    .btn-label { display: block; line-height: 1; }
+    .btn-sub {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    .link-btn.primary .btn-sub { color: rgba(255,255,255,0.7); }
+
+    .btn-arrow {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      transition: transform 0.2s;
+    }
+    .link-btn:hover .btn-arrow { transform: translateX(3px); }
+    .link-btn.primary .btn-arrow { color: rgba(255,255,255,0.6); }
+
+    .coming-soon-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.5);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    /* ── Footer ── */
+    .links-footer {
+      margin-top: 44px;
+      text-align: center;
+    }
+
+    .links-footer a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      transition: color 0.2s;
+    }
+
+    .links-footer a:hover { color: var(--text); }
+
+    .footer-logo-small {
+      height: 16px;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+
+    .links-footer a:hover .footer-logo-small { opacity: 0.8; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Profile -->
+  <div class="profile">
+    <div class="avatar-wrap">
+      <div class="avatar-ring">
+        <div class="avatar-inner">
+          <img src="assets/images/blueey-collects-logo.webp" alt="Blueey Collects" />
+        </div>
+      </div>
+    </div>
+    <h1 class="profile-name">Blueey Collects</h1>
+    <p class="profile-handle">Alejandro &nbsp;·&nbsp; <span>@blueeycollects</span></p>
+  </div>
+
+  <!-- Shop & Follow -->
+  <div class="section-label">Shop &amp; Follow</div>
+
+  <a href="https://www.whatnot.com/user/blueeytv/shows" target="_blank" rel="noopener" class="link-btn primary">
+    <div class="btn-icon">🎴</div>
+    <div class="btn-text">
+      <span class="btn-label">Whatnot</span>
+      <span class="btn-sub">Watch &amp; shop live shows</span>
+    </div>
+    <span class="btn-arrow">→</span>
+  </a>
+
+  <a href="https://www.instagram.com/blueeycollects/" target="_blank" rel="noopener" class="link-btn">
+    <div class="btn-icon bg-instagram">📸</div>
+    <div class="btn-text">
+      <span class="btn-label">Instagram</span>
+      <span class="btn-sub">@blueeycollects</span>
+    </div>
+    <span class="btn-arrow">→</span>
+  </a>
+
+  <!-- Pay Me -->
+  <div class="section-label">Pay Me</div>
+
+  <a href="#" class="link-btn placeholder">
+    <div class="btn-icon bg-cashapp">💵</div>
+    <div class="btn-text">
+      <span class="btn-label">Cash App</span>
+      <span class="btn-sub">Coming soon</span>
+    </div>
+    <span class="coming-soon-tag">Soon</span>
+  </a>
+
+  <a href="#" class="link-btn placeholder">
+    <div class="btn-icon bg-venmo">💙</div>
+    <div class="btn-text">
+      <span class="btn-label">Venmo</span>
+      <span class="btn-sub">Coming soon</span>
+    </div>
+    <span class="coming-soon-tag">Soon</span>
+  </a>
+
+  <!-- Contact -->
+  <div class="section-label">Contact</div>
+
+  <a href="mailto:info@blueeylabs.com" class="link-btn">
+    <div class="btn-icon bg-email">✉️</div>
+    <div class="btn-text">
+      <span class="btn-label">Email</span>
+      <span class="btn-sub">info@blueeylabs.com</span>
+    </div>
+    <span class="btn-arrow">→</span>
+  </a>
+
+  <a href="https://blueeylabs.com" class="link-btn">
+    <div class="btn-icon bg-web">🌐</div>
+    <div class="btn-text">
+      <span class="btn-label">Website</span>
+      <span class="btn-sub">blueeylabs.com</span>
+    </div>
+    <span class="btn-arrow">→</span>
+  </a>
+
+  <!-- Footer -->
+  <div class="links-footer">
+    <a href="https://blueeylabs.com">
+      <img src="assets/images/logo.svg" alt="Blueey Labs" class="footer-logo-small" />
+      Built by Blueey Labs
+    </a>
+  </div>
+
+</div>
+</body>
+</html>
