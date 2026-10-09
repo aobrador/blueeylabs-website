@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /links
 Disallow: /admin
+Disallow: /stats
 
 Sitemap: https://blueeylabs.com/sitemap.xml

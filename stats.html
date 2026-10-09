@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Link Stats — Blueey Collects</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0A0F1C; --blue: #2563EB; --cyan: #00C4FF; --red: #FF3B5C;
+      --gradient: linear-gradient(135deg, #2563EB, #00C4FF);
+      --text: #FFFFFF; --text-muted: #7A90B8;
+      --card: rgba(255,255,255,0.04); --border: rgba(255,255,255,0.08);
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg); color: var(--text); min-height: 100vh;
+      padding: 40px 16px 64px; display: flex; justify-content: center;
+    }
+    .page { width: 100%; max-width: 560px; }
+    h1 { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .sub { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 24px; }
+
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+    .card h2 { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; }
+
+    form { display: flex; gap: 10px; }
+    input {
+      flex: 1; min-width: 0; padding: 12px 14px; border-radius: 10px; font: inherit; font-size: 0.95rem;
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: var(--text);
+    }
+    input:focus { outline: none; border-color: var(--blue); }
+    button {
+      font: inherit; font-weight: 600; font-size: 0.88rem; cursor: pointer; border: 0; border-radius: 10px;
+      padding: 12px 16px; color: #fff; background: var(--gradient);
+    }
+    .error { color: var(--red); font-size: 0.85rem; margin-top: 10px; }
+
+    .totals { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+    .total { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px; }
+    .total .n { font-size: 1.5rem; font-weight: 800; }
+    .total .l { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+
+    .ranges { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+    .ranges button { background: var(--card); border: 1px solid var(--border); color: var(--text-muted); padding: 8px 14px; }
+    .ranges button.active { background: var(--gradient); border-color: transparent; color: #fff; }
+
+    .row { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; padding: 8px 0; }
+    .row + .row { border-top: 1px solid var(--border); }
+    .row .name { font-size: 0.9rem; font-weight: 500; overflow-wrap: anywhere; }
+    .row .count { font-size: 0.9rem; font-weight: 700; }
+    .bar { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.06); overflow: hidden; }
+    .bar span { display: block; height: 100%; border-radius: 3px; background: var(--gradient); }
+    .empty { color: var(--text-muted); font-size: 0.88rem; }
+
+    .footer { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+    .link-btn { background: none; color: var(--text-muted); padding: 6px 0; font-weight: 500; }
+    .link-btn:hover { color: var(--text); }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <h1>Link Stats</h1>
+  <p class="sub">Taps and visits on blueeylabs.com/links</p>
+
+  <div class="card" id="login">
+    <h2>Enter your stats key</h2>
+    <form id="login-form">
+      <input type="password" id="key" autocomplete="current-password" placeholder="Stats key" required />
+      <button type="submit">Open</button>
+    </form>
+    <p class="error hidden" id="login-error"></p>
+  </div>
+
+  <div id="dash" class="hidden">
+    <div class="ranges" id="ranges">
+      <button data-days="1">Today</button>
+      <button data-days="7" class="active">7 days</button>
+      <button data-days="30">30 days</button>
+      <button data-days="0">All time</button>
+    </div>
+
+    <div class="totals">
+      <div class="total"><div class="n" id="t-views">–</div><div class="l">Page visits</div></div>
+      <div class="total"><div class="n" id="t-taps">–</div><div class="l">Button taps</div></div>
+      <div class="total"><div class="n" id="t-rate">–</div><div class="l">Taps per visit</div></div>
+    </div>
+
+    <div class="card"><h2>Taps by button</h2><div id="taps"></div></div>
+    <div class="card"><h2>Visits by source</h2><div id="views"></div></div>
+    <div class="card"><h2>Taps by source</h2><div id="taps-src"></div></div>
+
+    <div class="footer">
+      <button class="link-btn" id="refresh">Refresh</button>
+      <button class="link-btn" id="logout">Sign out</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var STORE = 'blueey-stats-key';
+  var key = null;
+  var days = 7;
+
+  try { key = localStorage.getItem(STORE); } catch (e) {}
+
+  var $ = function (id) { return document.getElementById(id); };
+  var SOURCE_NAMES = { direct: 'Direct / link in bio', qr: 'QR code', nfc: 'NFC tap' };
+
+  function rows(host, list, labelKey, nameMap) {
+    host.textContent = '';
+    if (!list.length) {
+      var p = document.createElement('p');
+      p.className = 'empty';
+      p.textContent = 'Nothing yet for this period.';
+      host.appendChild(p);
+      return;
+    }
+    var max = list[0].n;
+    list.forEach(function (r) {
+      var row = document.createElement('div');
+      row.className = 'row';
+      var name = document.createElement('span');
+      name.className = 'name';
+      name.textContent = (nameMap && nameMap[r[labelKey]]) || r[labelKey];
+      var count = document.createElement('span');
+      count.className = 'count';
+      count.textContent = r.n;
+      var bar = document.createElement('div');
+      bar.className = 'bar';
+      var fill = document.createElement('span');
+      fill.style.width = Math.max(4, Math.round((r.n / max) * 100)) + '%';
+      bar.appendChild(fill);
+      row.appendChild(name);
+      row.appendChild(count);
+      row.appendChild(bar);
+      host.appendChild(row);
+    });
+  }
+
+  function sum(list) { return list.reduce(function (t, r) { return t + r.n; }, 0); }
+
+  function showLogin(msg) {
+    $('dash').classList.add('hidden');
+    $('login').classList.remove('hidden');
+    var err = $('login-error');
+    err.textContent = msg || '';
+    err.classList.toggle('hidden', !msg);
+  }
+
+  function load() {
+    if (!key) return showLogin();
+    fetch('/api/stats?days=' + days, { headers: { Authorization: 'Bearer ' + key } })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, status: r.status, data: d }; }); })
+      .then(function (res) {
+        if (!res.ok) {
+          if (res.status === 401) {
+            key = null;
+            try { localStorage.removeItem(STORE); } catch (e) {}
+          }
+          return showLogin(res.data.error || 'Something went wrong.');
+        }
+        var d = res.data;
+        $('login').classList.add('hidden');
+        $('dash').classList.remove('hidden');
+        var v = sum(d.views), t = sum(d.taps);
+        $('t-views').textContent = v;
+        $('t-taps').textContent = t;
+        $('t-rate').textContent = v ? (t / v).toFixed(1) : '–';
+        rows($('taps'), d.taps, 'button');
+        rows($('views'), d.views, 'src', SOURCE_NAMES);
+        rows($('taps-src'), d.tapsBySrc, 'src', SOURCE_NAMES);
+      })
+      .catch(function () { showLogin('Could not reach the stats server.'); });
+  }
+
+  $('login-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    key = $('key').value.trim();
+    try { localStorage.setItem(STORE, key); } catch (err) {}
+    $('key').value = '';
+    load();
+  });
+
+  $('ranges').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-days]');
+    if (!b) return;
+    days = parseInt(b.getAttribute('data-days'), 10);
+    Array.prototype.forEach.call(this.children, function (c) { c.classList.toggle('active', c === b); });
+    load();
+  });
+
+  $('refresh').addEventListener('click', load);
+  $('logout').addEventListener('click', function () {
+    key = null;
+    try { localStorage.removeItem(STORE); } catch (e) {}
+    showLogin();
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

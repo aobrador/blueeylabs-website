@@ -324,6 +324,7 @@
       a.className = box.className;
       a.style.background = box.style.background;
       a.setAttribute('aria-label', (ICONS[item.type] || ICONS.link).name);
+      a.setAttribute('data-track', 'Icon · ' + (ICONS[item.type] || ICONS.link).name);
       while (box.firstChild) a.appendChild(box.firstChild);
       wrap.appendChild(a);
     });
@@ -353,6 +354,7 @@
     if (isNaN(start) || !url) return;
 
     var card = anchor(url, 'show-card');
+    card.setAttribute('data-track', 'Next Show');
     var top = el('div', 'show-top');
     var kicker = el('span', 'show-kicker');
     kicker.appendChild(el('span', 'pulse'));
@@ -403,6 +405,7 @@
     if (btnUrl) {
       var btn = anchor(btnUrl, 'featured-btn');
       btn.textContent = f.buttonText || 'Learn more';
+      btn.setAttribute('data-track', 'Featured · ' + (f.title || f.label || 'Pull'));
       body.appendChild(btn);
     }
     card.appendChild(body);
@@ -417,6 +420,7 @@
       if (sec.title) host.appendChild(el('div', 'section-label', sec.title));
       links.forEach(function (l) {
         var a = anchor(safeUrl(l.url), 'link-btn' + (l.highlight ? ' primary' : ''));
+        a.setAttribute('data-track', l.label || (ICONS[l.type] || ICONS.link).name);
         a.appendChild(iconBox(l.type, 'btn-icon'));
         var text = el('div', 'btn-text');
         text.appendChild(el('span', 'btn-label', l.label || (ICONS[l.type] || ICONS.link).name));
@@ -428,7 +432,26 @@
     });
   }
 
+  var srcParam = new URLSearchParams(location.search).get('src');
+  var SRC = srcParam && /^[a-z0-9-]{1,20}$/.test(srcParam) ? srcParam : 'direct';
+
+  function send(payload) {
+    payload.src = SRC;
+    var body = JSON.stringify(payload);
+    try {
+      if (!(navigator.sendBeacon && navigator.sendBeacon('/api/track', body))) {
+        fetch('/api/track', { method: 'POST', body: body, keepalive: true }).catch(function () {});
+      }
+    } catch (e) {}
+  }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[data-track]');
+    if (a) send({ event: 'tap', button: a.getAttribute('data-track') });
+  });
+
   var page = document.getElementById('page');
+  send({ event: 'view' });
   fetch('links.json', { cache: 'no-cache' })
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (data) {

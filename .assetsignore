@@ -1,0 +1,6 @@
+worker.js
+wrangler.jsonc
+.wrangler
+.dev.vars*
+.env*
+node_modules

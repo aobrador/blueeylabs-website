@@ -1,13 +1,22 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "blueeylabs-website",
+  "main": "worker.js",
   "compatibility_date": "2026-05-06",
   "observability": {
     "enabled": true
   },
   "assets": {
-    "directory": "."
+    "directory": ".",
+    "binding": "ASSETS"
   },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "blueey-taps",
+      "database_id": "54e3dcf7-6729-465d-8f3c-249c425e5eb0"
+    }
+  ],
   "compatibility_flags": [
     "nodejs_compat"
   ]
