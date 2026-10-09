@@ -123,6 +123,45 @@
       font-weight: 700;
     }
 
+    .social-icons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 18px;
+    }
+
+    .social-icon {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .social-icon:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .social-icon.si-instagram {
+      background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
+    }
+
+    .social-icon.si-whatnot {
+      background: none;
+      padding: 0;
+    }
+
+    .social-icon.si-whatnot img {
+      width: 44px; height: 44px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .social-icon svg { width: 22px; height: 22px; }
+
     .profile-handle span {
       background: var(--gradient);
       -webkit-background-clip: text;
@@ -294,6 +333,19 @@
     <h1 class="profile-name">Blueey Collects</h1>
     <p class="profile-handle">Alejandro &nbsp;·&nbsp; <span>@blueeycollects</span></p>
     <p class="profile-bio">Lorcana Collector &nbsp;·&nbsp; Collect, Buy, Sell &amp; Trade<br>🃏 <strong>Always Buying!</strong> &nbsp;·&nbsp; 📍 Orlando, FL</p>
+
+    <div class="social-icons">
+      <a href="https://www.instagram.com/blueeycollects/" target="_blank" rel="noopener" class="social-icon si-instagram" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/>
+          <circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/>
+          <circle cx="17.5" cy="6.5" r="1.5" fill="white"/>
+        </svg>
+      </a>
+      <a href="https://www.whatnot.com/user/blueeytv/shows" target="_blank" rel="noopener" class="social-icon si-whatnot" aria-label="Whatnot">
+        <img src="assets/images/whatnot-logo.png" alt="Whatnot" />
+      </a>
+    </div>
   </div>
 
   <!-- Shop & Follow -->
