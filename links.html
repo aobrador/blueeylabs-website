@@ -85,13 +85,13 @@
     .avatar-inner {
       width: 100%; height: 100%;
       border-radius: 50%;
-      background: #0e1628;
+      background: #ffffff;
       display: flex; align-items: center; justify-content: center;
       overflow: hidden;
     }
 
     .avatar-inner img {
-      width: 90%; height: 90%;
+      width: 82%; height: 82%;
       object-fit: contain;
     }
 
@@ -198,12 +198,14 @@
       background: rgba(255,255,255,0.2);
     }
 
-    .btn-icon.bg-instagram { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); }
-    .btn-icon.bg-whatnot   { background: linear-gradient(135deg, #7c3aed, #a855f7); }
+    .btn-icon.bg-instagram { background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%); }
+    .btn-icon.bg-whatnot   { background: #7B2FFF; }
     .btn-icon.bg-cashapp   { background: #00D632; }
-    .btn-icon.bg-venmo     { background: #3D95CE; }
+    .btn-icon.bg-venmo     { background: #008CFF; }
     .btn-icon.bg-email     { background: rgba(37,99,235,0.25); border: 1px solid rgba(37,99,235,0.3); }
     .btn-icon.bg-web       { background: rgba(0,196,255,0.15); border: 1px solid rgba(0,196,255,0.2); }
+
+    .btn-icon svg { width: 22px; height: 22px; display: block; }
 
     .btn-text { flex: 1; text-align: left; }
     .btn-label { display: block; line-height: 1; }
@@ -282,7 +284,12 @@
   <div class="section-label">Shop &amp; Follow</div>
 
   <a href="https://www.whatnot.com/user/blueeytv/shows" target="_blank" rel="noopener" class="link-btn primary">
-    <div class="btn-icon">🎴</div>
+    <div class="btn-icon bg-whatnot">
+      <!-- Whatnot W -->
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 5h3.5l2.5 9 2.5-6h2l2.5 6 2.5-9H21l-4 14h-2.5L12 13l-2.5 6H7L3 5Z" fill="white"/>
+      </svg>
+    </div>
     <div class="btn-text">
       <span class="btn-label">Whatnot</span>
       <span class="btn-sub">Watch &amp; shop live shows</span>
@@ -291,7 +298,14 @@
   </a>
 
   <a href="https://www.instagram.com/blueeycollects/" target="_blank" rel="noopener" class="link-btn">
-    <div class="btn-icon bg-instagram">📸</div>
+    <div class="btn-icon bg-instagram">
+      <!-- Instagram camera icon -->
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/>
+        <circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/>
+        <circle cx="17.5" cy="6.5" r="1.5" fill="white"/>
+      </svg>
+    </div>
     <div class="btn-text">
       <span class="btn-label">Instagram</span>
       <span class="btn-sub">@blueeycollects</span>
@@ -303,7 +317,12 @@
   <div class="section-label">Pay Me</div>
 
   <a href="#" class="link-btn placeholder">
-    <div class="btn-icon bg-cashapp">💵</div>
+    <div class="btn-icon bg-cashapp">
+      <!-- Cash App $ -->
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16.7 8.3c-.4-1.7-1.8-2.8-3.7-3V4h-2v1.3C9 5.6 7.3 7 7.3 9c0 2.1 1.5 3.2 4.2 3.8 1.9.5 2.5 1 2.5 1.9 0 1-.9 1.6-2.3 1.6-1.6 0-2.7-.7-3.1-2H6.3c.4 2 1.9 3.2 4 3.5V19h2v-1.2c2.2-.3 3.8-1.7 3.8-3.8 0-2.2-1.5-3.3-4.3-3.9-1.8-.4-2.4-.9-2.4-1.7 0-.9.8-1.5 2.1-1.5 1.4 0 2.4.6 2.7 1.7h2.5z" fill="white"/>
+      </svg>
+    </div>
     <div class="btn-text">
       <span class="btn-label">Cash App</span>
       <span class="btn-sub">Coming soon</span>
@@ -312,7 +331,12 @@
   </a>
 
   <a href="#" class="link-btn placeholder">
-    <div class="btn-icon bg-venmo">💙</div>
+    <div class="btn-icon bg-venmo">
+      <!-- Venmo V -->
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19.5 3.5c.6 1 .9 2.1.9 3.5 0 4.3-3.7 9.9-6.7 13.8H7.5L4.5 3.9l5.7-.5 1.5 12.2c1.4-2.3 3.1-5.9 3.1-8.3 0-1.3-.2-2.3-.6-3.1L19.5 3.5z" fill="white"/>
+      </svg>
+    </div>
     <div class="btn-text">
       <span class="btn-label">Venmo</span>
       <span class="btn-sub">Coming soon</span>
@@ -324,7 +348,12 @@
   <div class="section-label">Contact</div>
 
   <a href="mailto:info@blueeylabs.com" class="link-btn">
-    <div class="btn-icon bg-email">✉️</div>
+    <div class="btn-icon bg-email">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="4" width="20" height="16" rx="3" stroke="white" stroke-width="2"/>
+        <path d="M2 8l10 6 10-6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
     <div class="btn-text">
       <span class="btn-label">Email</span>
       <span class="btn-sub">info@blueeylabs.com</span>
@@ -333,7 +362,12 @@
   </a>
 
   <a href="https://blueeylabs.com" class="link-btn">
-    <div class="btn-icon bg-web">🌐</div>
+    <div class="btn-icon bg-web">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="9" stroke="white" stroke-width="2"/>
+        <path d="M12 3c-2.5 3-4 5.5-4 9s1.5 6 4 9M12 3c2.5 3 4 5.5 4 9s-1.5 6-4 9M3 12h18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
     <div class="btn-text">
       <span class="btn-label">Website</span>
       <span class="btn-sub">blueeylabs.com</span>
