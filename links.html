@@ -16,7 +16,6 @@
       --bg: #0A0F1C;
       --blue: #2563EB;
       --cyan: #00C4FF;
-      --red: #FF3B5C;
       --gradient: linear-gradient(135deg, #2563EB, #00C4FF);
       --text: #FFFFFF;
       --text-muted: #7A90B8;
@@ -96,41 +95,6 @@
       color: var(--text-muted); margin: 28px 0 10px; padding-left: 4px;
     }
 
-    /* ── Next show card ── */
-    .show-card {
-      display: block; text-decoration: none; color: var(--text);
-      margin-top: 28px; padding: 18px 20px; border-radius: 16px;
-      background: linear-gradient(135deg, rgba(37,99,235,0.18), rgba(0,196,255,0.06));
-      border: 1px solid rgba(37,99,235,0.35);
-      transition: transform 0.22s ease, box-shadow 0.22s ease;
-    }
-    .show-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,99,235,0.25); }
-    .show-card.live {
-      background: linear-gradient(135deg, rgba(255,59,92,0.22), rgba(255,59,92,0.05));
-      border-color: rgba(255,59,92,0.5);
-    }
-    .show-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
-    .show-kicker {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan);
-    }
-    .show-card.live .show-kicker { color: var(--red); }
-    .pulse { width: 8px; height: 8px; border-radius: 50%; background: currentColor; position: relative; }
-    .pulse::after {
-      content: ''; position: absolute; inset: 0; border-radius: 50%; background: currentColor;
-      animation: pulse 1.6s ease-out infinite;
-    }
-    @keyframes pulse { from { transform: scale(1); opacity: 0.7; } to { transform: scale(2.8); opacity: 0; } }
-    .show-countdown {
-      font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 100px;
-      background: rgba(255,255,255,0.08); color: var(--text); white-space: nowrap;
-    }
-    .show-card.live .show-countdown { background: var(--red); }
-    .show-title { font-size: 1.08rem; font-weight: 700; margin-bottom: 4px; }
-    .show-when { font-size: 0.85rem; color: var(--text-muted); }
-    .show-cta { margin-top: 12px; font-size: 0.82rem; font-weight: 600; color: var(--cyan); }
-    .show-card.live .show-cta { color: #FF8FA3; }
-
     /* ── Featured card ── */
     .featured-card {
       overflow: hidden; border-radius: 16px; background: var(--card); border: 1px solid var(--border);
@@ -208,7 +172,6 @@
     <div class="social-icons" id="quick-icons"></div>
   </div>
 
-  <div id="next-show"></div>
   <div id="featured"></div>
   <div id="sections"></div>
 
@@ -330,61 +293,6 @@
     });
   }
 
-  function formatWhen(d) {
-    var day = d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
-    var time = d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' });
-    return day + ' · ' + time;
-  }
-
-  function countdown(ms) {
-    var m = Math.floor(ms / 60000);
-    var d = Math.floor(m / 1440), h = Math.floor((m % 1440) / 60), min = m % 60;
-    if (d > 0) return 'in ' + d + 'd ' + h + 'h';
-    if (h > 0) return 'in ' + h + 'h ' + min + 'm';
-    return 'in ' + Math.max(min, 1) + 'm';
-  }
-
-  var LIVE_WINDOW_MS = 3 * 60 * 60 * 1000;
-
-  function renderShow(s) {
-    var host = document.getElementById('next-show');
-    if (!s || !s.enabled || !s.datetime) return;
-    var start = new Date(s.datetime);
-    var url = safeUrl(s.url);
-    if (isNaN(start) || !url) return;
-
-    var card = anchor(url, 'show-card');
-    card.setAttribute('data-track', 'Next Show');
-    var top = el('div', 'show-top');
-    var kicker = el('span', 'show-kicker');
-    kicker.appendChild(el('span', 'pulse'));
-    var kickerText = el('span');
-    kicker.appendChild(kickerText);
-    var badge = el('span', 'show-countdown');
-    top.appendChild(kicker);
-    top.appendChild(badge);
-    card.appendChild(top);
-    card.appendChild(el('div', 'show-title', s.title || 'Live on Whatnot'));
-    card.appendChild(el('div', 'show-when', formatWhen(start)));
-    var cta = el('div', 'show-cta');
-    card.appendChild(cta);
-    host.appendChild(card);
-
-    function tick() {
-      var diff = start - Date.now();
-      if (diff <= -LIVE_WINDOW_MS) { host.innerHTML = ''; return false; }
-      var live = diff <= 0;
-      card.classList.toggle('live', live);
-      kickerText.textContent = live ? 'Live now' : 'Next show';
-      badge.textContent = live ? 'LIVE' : countdown(diff);
-      cta.textContent = live ? 'Join the show →' : 'Save the show on Whatnot →';
-      return true;
-    }
-    if (tick()) {
-      var timer = setInterval(function () { if (!tick()) clearInterval(timer); }, 30000);
-    }
-  }
-
   function renderFeatured(f) {
     if (!f || !f.enabled || !(f.title || f.image)) return;
     var host = document.getElementById('featured');
@@ -457,7 +365,6 @@
     .then(function (data) {
       renderProfile(data.profile);
       renderQuickIcons(data.quickIcons);
-      renderShow(data.nextShow);
       renderFeatured(data.featured);
       renderSections(data.sections);
     })

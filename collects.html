@@ -12,8 +12,6 @@
   <meta property="og:image" content="assets/images/og-image.png" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <style>
-    :root { --red: #FF3B5C; }
-
     /* ── Hero ── */
     .c-hero { padding: 150px 24px 70px; text-align: center; position: relative; z-index: 1; }
     .c-hero-inner { max-width: 720px; margin: 0 auto; position: relative; z-index: 1; }
@@ -35,26 +33,6 @@
 
     .block { padding: 80px 24px; }
     .narrow { max-width: 960px; margin: 0 auto; }
-
-    /* ── Next show ── */
-    #next-show { max-width: 720px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-    .show-card {
-      display: block; text-decoration: none; color: var(--text-primary);
-      padding: 22px 26px; border-radius: 18px; margin-bottom: 20px;
-      background: linear-gradient(135deg, rgba(37,99,235,0.2), rgba(0,196,255,0.06));
-      border: 1px solid rgba(37,99,235,0.4);
-      transition: transform 0.22s ease, box-shadow 0.22s ease;
-    }
-    .show-card:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(37,99,235,0.25); }
-    .show-card.live { background: linear-gradient(135deg, rgba(255,59,92,0.22), rgba(255,59,92,0.05)); border-color: rgba(255,59,92,0.5); }
-    .show-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
-    .show-kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan); }
-    .show-card.live .show-kicker { color: var(--red); }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: pulse 2s ease-in-out infinite; }
-    .show-badge { font-size: 0.76rem; font-weight: 700; padding: 4px 12px; border-radius: 100px; background: rgba(255,255,255,0.08); white-space: nowrap; }
-    .show-card.live .show-badge { background: var(--red); }
-    .show-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
-    .show-when { font-size: 0.9rem; color: var(--text-secondary); }
 
     /* ── Sell ── */
     .sell-card {
@@ -157,8 +135,6 @@
     </div>
   </div>
 </section>
-
-<div id="next-show"></div>
 
 <!-- Sell -->
 <section class="block" id="sell">
@@ -274,50 +250,5 @@
 </footer>
 
 <script src="assets/js/main.js"></script>
-<script>
-(function () {
-  var LIVE_WINDOW_MS = 3 * 60 * 60 * 1000;
-  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; }
-  function countdown(ms) {
-    var m = Math.floor(ms / 60000), d = Math.floor(m / 1440), h = Math.floor((m % 1440) / 60), min = m % 60;
-    if (d > 0) return 'in ' + d + 'd ' + h + 'h';
-    if (h > 0) return 'in ' + h + 'h ' + min + 'm';
-    return 'in ' + Math.max(min, 1) + 'm';
-  }
-  fetch('links.json', { cache: 'no-cache' })
-    .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (data) {
-      var s = data && data.nextShow;
-      if (!s || !s.enabled || !s.datetime || !/^https?:/i.test(s.url || '')) return;
-      var start = new Date(s.datetime);
-      if (isNaN(start)) return;
-      var host = document.getElementById('next-show');
-      var card = el('a', 'show-card');
-      card.href = s.url; card.target = '_blank'; card.rel = 'noopener';
-      var top = el('div', 'show-top'), kicker = el('span', 'show-kicker'), kText = el('span'), badge = el('span', 'show-badge');
-      kicker.appendChild(el('span', 'dot')); kicker.appendChild(kText);
-      top.appendChild(kicker); top.appendChild(badge);
-      card.appendChild(top);
-      card.appendChild(el('div', 'show-title', s.title || 'Live on Whatnot'));
-      card.appendChild(el('div', 'show-when',
-        start.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }) + ' · ' +
-        start.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' })));
-      function tick() {
-        var diff = start - Date.now();
-        if (diff <= -LIVE_WINDOW_MS) { host.textContent = ''; return false; }
-        var live = diff <= 0;
-        card.classList.toggle('live', live);
-        kText.textContent = live ? 'Live now on Whatnot' : 'Next show on Whatnot';
-        badge.textContent = live ? 'LIVE' : countdown(diff);
-        return true;
-      }
-      if (tick()) {
-        host.appendChild(card);
-        var t = setInterval(function () { if (!tick()) clearInterval(t); }, 30000);
-      }
-    })
-    .catch(function () {});
-})();
-</script>
 </body>
 </html>

@@ -33,16 +33,6 @@ collections:
                 hint: "One line per item. Wrap words in **double stars** to make them bold blue."
                 field: { label: Line, name: line, widget: string }
 
-          - label: Next Show
-            name: nextShow
-            widget: object
-            hint: "The card hides itself 3 hours after the start time."
-            fields:
-              - { label: Show the card, name: enabled, widget: boolean, default: true }
-              - { label: Show title, name: title, widget: string }
-              - { label: Start date & time, name: datetime, widget: datetime }
-              - { label: Show link, name: url, widget: string }
-
           - label: Featured Pull
             name: featured
             widget: object

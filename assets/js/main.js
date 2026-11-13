@@ -1,4 +1,3 @@
-const scriptUrl = document.currentScript.src;
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const canHover = window.matchMedia('(hover: hover)').matches;
 
@@ -121,52 +120,3 @@ if (warmSection) {
     document.body.classList.toggle('tone-warm', entry.isIntersecting);
   }, { rootMargin: '-35% 0px -35% 0px' }).observe(warmSection);
 }
-
-// ── "Live now" bar, driven by nextShow in links.json ──
-(function liveBar() {
-  const LIVE_WINDOW_MS = 3 * 60 * 60 * 1000;
-  let bar = null;
-
-  function render(show) {
-    const start = new Date(show.datetime).getTime();
-    const now = Date.now();
-    const live = now >= start && now < start + LIVE_WINDOW_MS;
-    if (live && !bar) {
-      bar = document.createElement('a');
-      bar.className = 'live-bar';
-      bar.href = show.url;
-      bar.target = '_blank';
-      bar.rel = 'noopener';
-      const dot = document.createElement('span');
-      dot.className = 'live-dot';
-      const label = document.createElement('span');
-      label.textContent = 'LIVE NOW on Whatnot';
-      const title = document.createElement('span');
-      title.className = 'live-title';
-      title.textContent = show.title ? '· ' + show.title : '';
-      const go = document.createElement('span');
-      go.className = 'live-go';
-      go.textContent = 'Watch →';
-      bar.append(dot, label, title, go);
-      document.body.prepend(bar);
-      document.body.classList.add('has-live');
-    } else if (!live && bar) {
-      bar.remove();
-      bar = null;
-      document.body.classList.remove('has-live');
-    }
-    return now < start + LIVE_WINDOW_MS;
-  }
-
-  fetch(new URL('../../links.json', scriptUrl), { cache: 'no-cache' })
-    .then(r => (r.ok ? r.json() : null))
-    .then(data => {
-      const show = data && data.nextShow;
-      if (!show || !show.enabled || !show.datetime || !/^https?:/i.test(show.url || '')) return;
-      if (isNaN(new Date(show.datetime))) return;
-      if (render(show)) {
-        const timer = setInterval(() => { if (!render(show)) clearInterval(timer); }, 30000);
-      }
-    })
-    .catch(() => {});
-})();
