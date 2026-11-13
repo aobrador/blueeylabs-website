@@ -42,18 +42,48 @@
   </div>
 </section>
 
-<section class="shots-section" id="screenshots" aria-label="Blufinn screenshots">
-  <div class="shots fade-up" tabindex="0">
-    <img src="../assets/images/blufinn/01-home.jpg" alt="Your money. A clearer picture. Blufinn Home with fictional upcoming bills, card payments and paycheck totals." width="639" height="1389" loading="eager" />
-    <img src="../assets/images/blufinn/02-paycheck.jpg" alt="Give every paycheck a plan. Paycheck balance with paid items, reserved payments and the amount left after the plan." width="639" height="1389" loading="eager" />
-    <img src="../assets/images/blufinn/03-cards.jpg" alt="Your cards. All together. Credit cards organized by owner and due date, with customizable snapshot totals." width="639" height="1389" loading="eager" />
-    <img src="../assets/images/blufinn/04-rewards.jpg" alt="Know what your cards can earn. A credit card's payment information, rewards and saved benefits." width="639" height="1389" loading="eager" />
-    <img src="../assets/images/blufinn/05-recurring.jpg" alt="Keep track of what repeats. Recurring bills and subscriptions with amounts, owners and expected autopay dates." width="639" height="1389" loading="lazy" />
-    <img src="../assets/images/blufinn/06-budget.jpg" alt="Make room for what matters. Monthly budget categories with planned amounts and money remaining." width="639" height="1389" loading="lazy" />
-    <img src="../assets/images/blufinn/07-ask-blufinn.jpg" alt="Ask about your plan. Ask Blufinn answering a question about upcoming payments using fictional entered data." width="639" height="1389" loading="lazy" />
-    <img src="../assets/images/blufinn/08-catalog.jpg" alt="Find your card. Make it yours. The searchable card catalog with issuer filters, rewards summaries and annual fees." width="639" height="1389" loading="lazy" />
+<section class="app-block shots-section" id="screenshots">
+  <div class="app-narrow">
+    <div class="section-header fade-up">
+      <div class="section-label">Inside the app</div>
+      <h2>See how it works.</h2>
+    </div>
+    <div class="shots fade-up" id="shots">
+      <figure class="shot active">
+        <figcaption><button type="button"><strong>Your money. A clearer picture.</strong><span>See upcoming payments and your plan in one place.</span></button></figcaption>
+        <img src="../assets/images/blufinn/01-home-app.jpg" alt="Blufinn Home with fictional upcoming bills, card payments and paycheck totals." width="639" height="1390" loading="eager" />
+      </figure>
+      <figure class="shot">
+        <figcaption><button type="button"><strong>Give every paycheck a plan.</strong><span>Separate paid bills, planned payments and money left.</span></button></figcaption>
+        <img src="../assets/images/blufinn/02-paycheck-app.jpg" alt="Paycheck balance with paid items, reserved payments and the amount left after the plan." width="639" height="1390" loading="eager" />
+      </figure>
+      <figure class="shot">
+        <figcaption><button type="button"><strong>Your cards. All together.</strong><span>Keep due dates, annual fees and owners organized.</span></button></figcaption>
+        <img src="../assets/images/blufinn/03-cards-app.jpg" alt="Credit cards organized by owner and due date, with customizable snapshot totals." width="639" height="1390" loading="lazy" />
+      </figure>
+      <figure class="shot">
+        <figcaption><button type="button"><strong>Know what your cards can earn.</strong><span>See the rewards and benefits you've saved.</span></button></figcaption>
+        <img src="../assets/images/blufinn/04-rewards-app.jpg" alt="A credit card's payment information, rewards and saved benefits." width="639" height="1390" loading="lazy" />
+      </figure>
+      <figure class="shot">
+        <figcaption><button type="button"><strong>Keep track of what repeats.</strong><span>Organize fixed bills, subscriptions and expected autopay.</span></button></figcaption>
+        <img src="../assets/images/blufinn/05-recurring-app.jpg" alt="Recurring bills and subscriptions with amounts, owners and expected autopay dates." width="639" height="1390" loading="lazy" />
+      </figure>
+      <figure class="shot">
+        <figcaption><button type="button"><strong>Make room for what matters.</strong><span>Build a monthly plan, category by category.</span></button></figcaption>
+        <img src="../assets/images/blufinn/06-budget-app.jpg" alt="Monthly budget categories with planned amounts and money remaining." width="639" height="1390" loading="lazy" />
+      </figure>
+      <figure class="shot">
+        <figcaption><button type="button"><strong>Ask about your plan.</strong><span>Check upcoming payments using the data you've entered.</span></button></figcaption>
+        <img src="../assets/images/blufinn/07-ask-blufinn-app.jpg" alt="Ask Blufinn answering a question about upcoming payments using fictional entered data." width="639" height="1390" loading="lazy" />
+      </figure>
+      <figure class="shot">
+        <figcaption><button type="button"><strong>Find your card. Make it yours.</strong><span>Start with the catalog, then personalize your details.</span></button></figcaption>
+        <img src="../assets/images/blufinn/08-catalog-app.jpg" alt="The searchable card catalog with issuer filters, rewards summaries and annual fees." width="639" height="1390" loading="lazy" />
+      </figure>
+    </div>
+    <p class="shots-note">All names, balances and payments shown are sample data.</p>
   </div>
-  <p class="shots-note">Swipe to see more. All names, balances and payments shown are sample data.</p>
 </section>
 
 <section class="app-block" id="features">
@@ -164,5 +194,33 @@
   </div>
 </footer>
 <script src="../assets/js/main.js"></script>
+<script>
+(function () {
+  var wrap = document.getElementById('shots');
+  if (!wrap) return;
+  var shots = [].slice.call(wrap.querySelectorAll('.shot'));
+  var desktop = window.matchMedia('(min-width: 900px)');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var timer = null, current = 0;
+  function show(i) {
+    current = i;
+    shots.forEach(function (s, n) { s.classList.toggle('active', n === i); });
+  }
+  function stop() { if (timer) { clearInterval(timer); timer = null; } }
+  shots.forEach(function (s, i) {
+    var b = s.querySelector('button');
+    b.addEventListener('click', function () { stop(); show(i); });
+    b.addEventListener('focus', function () { stop(); show(i); });
+    b.addEventListener('mouseenter', function () { stop(); show(i); });
+  });
+  if (!reduce && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (e, obs) {
+      if (!e[0].isIntersecting) return;
+      obs.disconnect();
+      timer = setInterval(function () { if (desktop.matches) show((current + 1) % shots.length); }, 3200);
+    }, { threshold: 0.4 }).observe(wrap);
+  }
+})();
+</script>
 </body>
 </html>
