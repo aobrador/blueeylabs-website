@@ -41,14 +41,15 @@
       position: absolute; display: block; border-radius: 24%;
       box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.08);
       animation: tileFloat 9s ease-in-out infinite;
-      transition: filter 0.25s ease;
+      translate: calc(var(--px, 0) * var(--d, 20) * 1px) calc(var(--py, 0) * var(--d, 20) * 1px);
+      transition: filter 0.25s ease, translate 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .tile:hover { filter: brightness(1.12); }
     .tile img { width: 100%; height: 100%; display: block; border-radius: inherit; }
-    .tile-blufinn { width: 190px; height: 190px; top: 20px; left: 8%; --r: -8deg; }
-    .tile-stocklore { width: 170px; height: 170px; top: 150px; right: 4%; --r: 9deg; animation-delay: -3s; }
+    .tile-blufinn { width: 190px; height: 190px; top: 20px; left: 8%; --r: -8deg; --d: 34; }
+    .tile-stocklore { width: 170px; height: 170px; top: 150px; right: 4%; --r: 9deg; --d: -26; animation-delay: -3s; }
     .tile-collects {
-      width: 130px; height: 130px; bottom: 6px; left: 22%; --r: -4deg; animation-delay: -6s;
+      width: 130px; height: 130px; bottom: 6px; left: 22%; --r: -4deg; --d: 52; animation-delay: -6s;
       border-radius: 50%; background: var(--gradient); padding: 3px;
     }
     .tile-collects span {
@@ -130,31 +131,56 @@
     .platforms .ig { background: linear-gradient(135deg,#833ab4 0%,#fd1d1d 50%,#fcb045 100%); }
     .platforms .ig svg { width: 20px; height: 20px; }
 
-    /* Fanned cards */
-    .fan { position: relative; width: 300px; height: 280px; }
+    /* Fanned cards: dealt out on scroll, holographic on hover */
+    .fan {
+      position: relative; width: 300px; height: 280px;
+      transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(var(--fs, 1));
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
     .fan i {
       position: absolute; left: 50%; bottom: 10px; width: 150px; height: 210px; margin-left: -75px;
-      border-radius: 12px; transform-origin: 50% 110%;
+      border-radius: 12px; transform-origin: 50% 110%; overflow: hidden;
       border: 1px solid rgba(255,255,255,0.16);
       box-shadow: 0 16px 40px rgba(0,0,0,0.45);
-      transition: transform 0.4s ease;
+      transform: translateY(60px) rotate(0deg) scale(0.9); opacity: 0;
+      transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
     }
-    .fan i:nth-child(1) { transform: rotate(-22deg); background: linear-gradient(160deg, #1E3A8A, #0B1B3F); }
-    .fan i:nth-child(2) { transform: rotate(-8deg);  background: linear-gradient(160deg, #2563EB, #123075); }
-    .fan i:nth-child(3) { transform: rotate(6deg);   background: linear-gradient(160deg, #0EA5E9, #164E8A); }
+    .fan i::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(115deg, transparent 22%, rgba(255,90,190,0.6) 36%, rgba(90,220,255,0.6) 45%, rgba(130,255,170,0.55) 53%, rgba(255,230,100,0.55) 61%, transparent 78%);
+      background-size: 260% 260%;
+      background-position: var(--hx, 50%) var(--hy, 50%);
+      mix-blend-mode: screen; opacity: var(--ho, 0);
+      transition: opacity 0.45s ease; pointer-events: none;
+    }
+    .fan i:nth-child(1) { background: linear-gradient(160deg, #1E3A8A, #0B1B3F); transition-delay: 0.15s; }
+    .fan i:nth-child(2) { background: linear-gradient(160deg, #2563EB, #123075); transition-delay: 0.27s; }
+    .fan i:nth-child(3) { background: linear-gradient(160deg, #0EA5E9, #164E8A); transition-delay: 0.39s; }
     .fan i:nth-child(4) {
-      transform: rotate(20deg); background: var(--bg-base); border: 2px solid rgba(0,196,255,0.55);
+      background: var(--bg-base); border: 2px solid rgba(0,196,255,0.55); transition-delay: 0.51s;
       display: flex; align-items: center; justify-content: center;
     }
     .fan i:nth-child(4) img { width: 72%; mix-blend-mode: screen; }
-    .collects-card:hover .fan i:nth-child(1) { transform: rotate(-28deg); }
-    .collects-card:hover .fan i:nth-child(2) { transform: rotate(-11deg); }
-    .collects-card:hover .fan i:nth-child(3) { transform: rotate(8deg); }
-    .collects-card:hover .fan i:nth-child(4) { transform: rotate(26deg); }
+    .collects-card.visible .fan i { opacity: 1; }
+    .collects-card.visible .fan i:nth-child(1) { transform: rotate(-22deg); }
+    .collects-card.visible .fan i:nth-child(2) { transform: rotate(-8deg); }
+    .collects-card.visible .fan i:nth-child(3) { transform: rotate(6deg); }
+    .collects-card.visible .fan i:nth-child(4) { transform: rotate(20deg); }
+    @media (hover: hover) {
+      .collects-card.visible:hover .fan i { transition-delay: 0s; transition-duration: 0.45s; }
+      .collects-card.visible:hover .fan i:nth-child(1) { transform: rotate(-28deg); }
+      .collects-card.visible:hover .fan i:nth-child(2) { transform: rotate(-11deg); }
+      .collects-card.visible:hover .fan i:nth-child(3) { transform: rotate(8deg); }
+      .collects-card.visible:hover .fan i:nth-child(4) { transform: rotate(26deg); }
+    }
+    @media (hover: none) {
+      .collects-card.visible .fan i::after { opacity: 0.45; animation: holoSweep 6s ease-in-out infinite alternate; }
+    }
+    @keyframes holoSweep { from { background-position: 0% 0%; } to { background-position: 100% 100%; } }
 
     /* ── Services (compact) ── */
     .services-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-    .svc { padding: 24px; border-radius: 16px; background: var(--bg-card); border: 1px solid var(--border); transition: border-color 0.25s ease; }
+    .svc { position: relative; padding: 24px; border-radius: 16px; background: var(--bg-card); border: 1px solid var(--border); transition: border-color 0.25s ease; }
     .svc:hover { border-color: var(--border-hover); }
     .svc .icon-box { width: 44px; height: 44px; font-size: 1.2rem; margin-bottom: 14px; }
     .svc h3 { font-size: 1rem; margin-bottom: 6px; }
@@ -178,7 +204,7 @@
       .tile-collects { width: 104px; height: 104px; left: 26%; }
       .apps-grid { grid-template-columns: 1fr; }
       .collects-card { grid-template-columns: 1fr; padding: 40px 28px; gap: 16px; }
-      .fan { order: -1; margin: 0 auto; transform: scale(0.8); height: 240px; }
+      .fan { order: -1; margin: 0 auto; --fs: 0.8; height: 240px; }
       .services-row { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 520px) {
@@ -220,7 +246,7 @@
     <div>
       <div class="hero-eyebrow fade-up">
         <span class="hero-eyebrow-line"></span>
-        <span class="hero-eyebrow-text">Blueey Labs · Orlando, FL</span>
+        <span class="hero-eyebrow-text">Apps · Tools · Trading Cards</span>
       </div>
       <h1 class="fade-up fade-up-delay-1">
         Built for<br>
@@ -235,8 +261,8 @@
       </div>
     </div>
     <div class="hero-visual fade-up fade-up-delay-2" aria-hidden="true">
-      <a href="#apps" class="tile tile-blufinn" tabindex="-1"><img src="assets/images/blufinn-icon.png" alt="" /></a>
-      <a href="#apps" class="tile tile-stocklore" tabindex="-1"><img src="assets/images/stocklore-icon.png" alt="" /></a>
+      <a href="#apps" class="tile tile-blufinn" tabindex="-1"><img src="assets/images/blufinn-icon.webp" alt="" /></a>
+      <a href="#apps" class="tile tile-stocklore" tabindex="-1"><img src="assets/images/stocklore-icon.webp" alt="" /></a>
       <a href="collects.html" class="tile tile-collects" tabindex="-1"><span><img src="assets/images/blueey-collects-logo.webp" alt="" /></span></a>
     </div>
   </div>
@@ -254,9 +280,9 @@
     </div>
 
     <div class="apps-grid">
-      <article class="app-card fade-up">
+      <article class="app-card glow fade-up">
         <div class="app-top">
-          <img src="assets/images/blufinn-icon.png" alt="Blufinn app icon" />
+          <img src="assets/images/blufinn-icon.webp" alt="Blufinn app icon" />
           <div>
             <span class="badge badge-cyan"><span class="badge-dot"></span>Coming Soon · iOS</span>
             <h3><span class="gradient-text">Blufinn</span></h3>
@@ -275,9 +301,9 @@
         </div>
       </article>
 
-      <article class="app-card stocklore fade-up fade-up-delay-1">
+      <article class="app-card stocklore glow glow-warm fade-up fade-up-delay-1" data-tone="warm">
         <div class="app-top">
-          <img src="assets/images/stocklore-icon.png" alt="StockLore app icon" />
+          <img src="assets/images/stocklore-icon.webp" alt="StockLore app icon" />
           <div>
             <span class="badge badge-warm"><span class="badge-dot"></span>In Development</span>
             <h3><span>StockLore</span></h3>
@@ -301,7 +327,7 @@
 
 <!-- Blueey Collects -->
 <section class="block" id="collects" style="padding-top: 10px;">
-  <div class="collects-card fade-up">
+  <div class="collects-card fade-up" data-holo>
     <div>
       <div class="section-label">Blueey Collects</div>
       <h2>Cards are the<br><span class="gradient-text">other half of us.</span></h2>
@@ -318,8 +344,8 @@
         <a class="ig" href="https://www.instagram.com/blueeycollects/" target="_blank" rel="noopener" aria-label="Instagram">
           <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="white"/></svg>
         </a>
-        <a href="https://www.whatnot.com/user/blueeytv/shows" target="_blank" rel="noopener" aria-label="Whatnot"><img src="assets/images/whatnot-logo.png" alt="" /></a>
-        <a class="pad" href="https://www.tcgplayer.com/sellers/Blueey-Labs/9c25921c" target="_blank" rel="noopener" aria-label="TCGPlayer"><img src="assets/images/tcgplayer-logo.png" alt="" /></a>
+        <a href="https://www.whatnot.com/user/blueeytv/shows" target="_blank" rel="noopener" aria-label="Whatnot"><img src="assets/images/whatnot-logo.webp" alt="" /></a>
+        <a class="pad" href="https://www.tcgplayer.com/sellers/Blueey-Labs/9c25921c" target="_blank" rel="noopener" aria-label="TCGPlayer"><img src="assets/images/tcgplayer-logo.webp" alt="" /></a>
         <a class="pad" href="https://ebay.io/m/PekpHV" target="_blank" rel="noopener" aria-label="eBay"><img src="assets/images/ebay-logo.webp" alt="" style="padding:0;object-fit:cover;" /></a>
       </div>
     </div>
@@ -343,22 +369,22 @@
       <a href="contact.html" class="btn btn-outline">Start a Project</a>
     </div>
     <div class="services-row">
-      <div class="svc fade-up">
+      <div class="svc glow fade-up">
         <div class="icon-box">📱</div>
         <h3>App Development</h3>
         <p>iOS and cross-platform apps, from idea to the App Store.</p>
       </div>
-      <div class="svc fade-up fade-up-delay-1">
+      <div class="svc glow fade-up fade-up-delay-1">
         <div class="icon-box">🌐</div>
         <h3>Web Development</h3>
         <p>Fast, modern websites and web apps that are easy to run.</p>
       </div>
-      <div class="svc fade-up fade-up-delay-2">
+      <div class="svc glow fade-up fade-up-delay-2">
         <div class="icon-box">💻</div>
         <h3>IT Consulting</h3>
         <p>Practical tech guidance, setup and support.</p>
       </div>
-      <div class="svc fade-up fade-up-delay-3">
+      <div class="svc glow fade-up fade-up-delay-3">
         <div class="icon-box">⚙️</div>
         <h3>Utility Apps</h3>
         <p>Small custom tools that solve one specific problem.</p>
