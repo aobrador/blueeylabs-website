@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blueey Collects — Lorcana Cards · Buy, Sell &amp; Trade</title>
+  <meta name="description" content="Blueey Collects is a Lorcana collector in Orlando, FL. We buy collections, sell on Whatnot, TCGPlayer and eBay, and go live every week." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16.png" />
+  <meta property="og:title" content="Blueey Collects — Lorcana Cards · Buy, Sell &amp; Trade" />
+  <meta property="og:description" content="Lorcana collector in Orlando, FL. Always buying collections. Live every week on Whatnot." />
+  <meta property="og:image" content="assets/images/og-image.png" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    :root { --red: #FF3B5C; }
+
+    /* ── Hero ── */
+    .c-hero { padding: 150px 24px 70px; text-align: center; position: relative; z-index: 1; }
+    .c-hero-inner { max-width: 720px; margin: 0 auto; position: relative; z-index: 1; }
+    .avatar-ring { width: 124px; height: 124px; border-radius: 50%; background: var(--gradient); padding: 3px; margin: 0 auto 24px; }
+    .avatar-inner {
+      width: 100%; height: 100%; border-radius: 50%; background: var(--bg-base);
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .avatar-inner img { width: 82%; height: 82%; object-fit: contain; mix-blend-mode: screen; }
+    .c-hero h1 { font-size: clamp(2.2rem, 6vw, 3.8rem); margin-bottom: 16px; }
+    .c-hero .lead { font-size: 1.12rem; line-height: 1.7; margin-bottom: 14px; }
+    .c-tags { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+    .c-tags span {
+      font-size: 0.8rem; font-weight: 600; padding: 6px 14px; border-radius: 100px;
+      background: rgba(37,99,235,0.14); border: 1px solid rgba(37,99,235,0.28); color: #9DC1FF;
+    }
+    .c-tags .hot { background: rgba(0,196,255,0.12); border-color: rgba(0,196,255,0.3); color: var(--cyan); }
+    .c-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    .block { padding: 80px 24px; }
+    .narrow { max-width: 960px; margin: 0 auto; }
+
+    /* ── Next show ── */
+    #next-show { max-width: 720px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+    .show-card {
+      display: block; text-decoration: none; color: var(--text-primary);
+      padding: 22px 26px; border-radius: 18px; margin-bottom: 20px;
+      background: linear-gradient(135deg, rgba(37,99,235,0.2), rgba(0,196,255,0.06));
+      border: 1px solid rgba(37,99,235,0.4);
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+    .show-card:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(37,99,235,0.25); }
+    .show-card.live { background: linear-gradient(135deg, rgba(255,59,92,0.22), rgba(255,59,92,0.05)); border-color: rgba(255,59,92,0.5); }
+    .show-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+    .show-kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan); }
+    .show-card.live .show-kicker { color: var(--red); }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: pulse 2s ease-in-out infinite; }
+    .show-badge { font-size: 0.76rem; font-weight: 700; padding: 4px 12px; border-radius: 100px; background: rgba(255,255,255,0.08); white-space: nowrap; }
+    .show-card.live .show-badge { background: var(--red); }
+    .show-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
+    .show-when { font-size: 0.9rem; color: var(--text-secondary); }
+
+    /* ── Sell ── */
+    .sell-card {
+      border-radius: 24px; padding: 52px;
+      background: linear-gradient(135deg, rgba(37,99,235,0.16), rgba(0,196,255,0.05));
+      border: 1px solid rgba(37,99,235,0.32);
+    }
+    .sell-card h2 { margin-bottom: 14px; }
+    .sell-card > p { font-size: 1.02rem; line-height: 1.75; max-width: 600px; margin-bottom: 36px; }
+    .sell-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 36px; }
+    .sell-grid h3 { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); font-weight: 700; margin-bottom: 16px; }
+    .buy-list { list-style: none; display: grid; gap: 12px; }
+    .buy-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.95rem; color: var(--text-primary); }
+    .buy-list li::before {
+      content: '✓'; flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; margin-top: 1px;
+      display: flex; align-items: center; justify-content: center; font-size: 0.7rem;
+      color: var(--cyan); background: rgba(0,196,255,0.14); border: 1px solid rgba(0,196,255,0.3);
+    }
+    .steps { list-style: none; display: grid; gap: 16px; counter-reset: step; }
+    .steps li { display: flex; gap: 14px; align-items: flex-start; counter-increment: step; }
+    .steps li::before {
+      content: counter(step); flex-shrink: 0; width: 30px; height: 30px; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem;
+      background: var(--gradient); color: #fff;
+    }
+    .steps strong { display: block; font-size: 0.95rem; }
+    .steps span { font-size: 0.87rem; color: var(--text-secondary); }
+    .sell-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+    .sell-note { font-size: 0.82rem; color: var(--text-muted); }
+
+    /* ── Where to buy ── */
+    .shop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .shop {
+      display: flex; flex-direction: column; gap: 14px; text-decoration: none; color: var(--text-primary);
+      padding: 26px; border-radius: 18px; background: var(--bg-card); border: 1px solid var(--border);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .shop:hover { transform: translateY(-4px); border-color: var(--border-hover); box-shadow: var(--glow); }
+    .shop-logo { width: 52px; height: 52px; border-radius: 14px; overflow: hidden; background: #fff; }
+    .shop-logo img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .shop-logo.pad img { object-fit: contain; padding: 5px; }
+    .shop h3 { font-size: 1.1rem; }
+    .shop p { font-size: 0.88rem; line-height: 1.6; flex: 1; }
+    .shop .go { font-size: 0.86rem; font-weight: 600; color: var(--cyan); }
+
+    /* ── Instagram ── */
+    .ig-card {
+      display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center;
+      padding: 32px; border-radius: 20px; background: var(--bg-card); border: 1px solid var(--border);
+    }
+    .ig-icon {
+      width: 68px; height: 68px; border-radius: 18px; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg,#833ab4 0%,#fd1d1d 50%,#fcb045 100%);
+    }
+    .ig-icon svg { width: 34px; height: 34px; }
+    .ig-card h3 { font-size: 1.25rem; margin-bottom: 4px; }
+    .ig-card p { font-size: 0.93rem; }
+
+    @media (max-width: 820px) {
+      .c-hero { padding: 120px 20px 50px; }
+      .block { padding: 56px 16px; }
+      .sell-card { padding: 34px 24px; }
+      .sell-grid { grid-template-columns: 1fr; gap: 30px; }
+      .shop-grid { grid-template-columns: 1fr; }
+      .ig-card { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/images/logo.svg" alt="Blueey Labs" height="28" /></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="collects.html">Collects</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="c-hero">
+  <div class="orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
+  <div class="c-hero-inner">
+    <div class="avatar-ring fade-up"><div class="avatar-inner"><img src="assets/images/blueey-collects-logo.webp" alt="Blueey Collects logo" /></div></div>
+    <h1 class="fade-up fade-up-delay-1">Blueey <span class="gradient-text">Collects</span></h1>
+    <p class="lead fade-up fade-up-delay-2">Lorcana collector in Orlando, FL. We collect, buy, sell and trade, and go live every week on Whatnot.</p>
+    <div class="c-tags fade-up fade-up-delay-2">
+      <span>Disney Lorcana</span><span>Orlando, FL</span><span class="hot">Always Buying</span>
+    </div>
+    <div class="c-actions fade-up fade-up-delay-3">
+      <a href="#sell" class="btn btn-primary">Sell Me Your Collection</a>
+      <a href="#shop" class="btn btn-ghost">Shop My Cards</a>
+    </div>
+  </div>
+</section>
+
+<div id="next-show"></div>
+
+<!-- Sell -->
+<section class="block" id="sell">
+  <div class="narrow">
+    <div class="sell-card fade-up">
+      <div class="section-label">Selling your cards?</div>
+      <h2>Sell me your <span class="gradient-text">collection.</span></h2>
+      <p>Whether it's a few cards or a whole binder, send a message on Instagram and we'll take a look. No obligation.</p>
+
+      <div class="sell-grid">
+        <div>
+          <h3>What I buy</h3>
+          <ul class="buy-list">
+            <li>Disney Lorcana singles</li>
+            <li>Sealed boxes and product</li>
+            <li>Full collections and binders</li>
+            <li>Bulk lots</li>
+          </ul>
+        </div>
+        <div>
+          <h3>How it works</h3>
+          <ol class="steps">
+            <li><div><strong>Message me on Instagram</strong><span>Send photos or a list of what you have.</span></div></li>
+            <li><div><strong>Get an offer</strong><span>I'll look it over and reply with a price.</span></div></li>
+            <li><div><strong>We work out the rest</strong><span>Local in Orlando, or shipped.</span></div></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="sell-actions">
+        <a href="https://ig.me/m/blueeycollects" target="_blank" rel="noopener" class="btn btn-primary">Message @blueeycollects</a>
+        <span class="sell-note">Opens an Instagram DM. Prefer email? <a href="mailto:info@blueeylabs.com" style="color:var(--cyan);text-decoration:none;">info@blueeylabs.com</a></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Shop -->
+<section class="block" id="shop" style="padding-top: 0;">
+  <div class="narrow">
+    <div class="section-header fade-up" style="margin-bottom: 36px;">
+      <div class="section-label">Buy from me</div>
+      <h2>Where to shop.</h2>
+    </div>
+    <div class="shop-grid">
+      <a class="shop fade-up" href="https://www.whatnot.com/user/blueeytv/shows" target="_blank" rel="noopener">
+        <div class="shop-logo"><img src="assets/images/whatnot-logo.png" alt="" /></div>
+        <h3>Whatnot</h3>
+        <p>Live shows every week. Tune in and shop live @blueeytv.</p>
+        <span class="go">Watch live →</span>
+      </a>
+      <a class="shop fade-up fade-up-delay-1" href="https://www.tcgplayer.com/sellers/Blueey-Labs/9c25921c" target="_blank" rel="noopener">
+        <div class="shop-logo pad"><img src="assets/images/tcgplayer-logo.png" alt="" /></div>
+        <h3>TCGPlayer</h3>
+        <p>Shop singles from the Blueey Labs seller store.</p>
+        <span class="go">Shop singles →</span>
+      </a>
+      <a class="shop fade-up fade-up-delay-2" href="https://ebay.io/m/PekpHV" target="_blank" rel="noopener">
+        <div class="shop-logo"><img src="assets/images/ebay-logo.webp" alt="" /></div>
+        <h3>eBay</h3>
+        <p>Browse current listings in the eBay store.</p>
+        <span class="go">View listings →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Instagram -->
+<section class="block" style="padding-top: 0;">
+  <div class="narrow">
+    <div class="ig-card fade-up">
+      <div class="ig-icon">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="white"/></svg>
+      </div>
+      <div>
+        <h3>See the collection on Instagram</h3>
+        <p>Pulls, pickups, show updates and story sales at @blueeycollects.</p>
+      </div>
+      <a href="https://www.instagram.com/blueeycollects/" target="_blank" rel="noopener" class="btn btn-outline">Follow</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <a href="index.html" class="footer-logo"><img src="assets/images/logo.svg" alt="Blueey Labs" height="24" /></a>
+      <div class="footer-copy">
+        <p>© 2026 Blueey Labs, LLC. All rights reserved.</p>
+        <p style="margin-top:6px;">Made with ❤️ in Florida by Blueey Labs</p>
+      </div>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-label">Navigation</span>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+      <li><a href="collects.html">Collects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-label">Legal</span>
+      <ul class="footer-links">
+        <li><a href="legal/terms.html">Terms of Service</a></li>
+        <li><a href="legal/privacy.html">Privacy Policy</a></li>
+        <li><a href="blufinn/terms.html">Blufinn Terms</a></li>
+        <li><a href="blufinn/privacy.html">Blufinn Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+(function () {
+  var LIVE_WINDOW_MS = 3 * 60 * 60 * 1000;
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; }
+  function countdown(ms) {
+    var m = Math.floor(ms / 60000), d = Math.floor(m / 1440), h = Math.floor((m % 1440) / 60), min = m % 60;
+    if (d > 0) return 'in ' + d + 'd ' + h + 'h';
+    if (h > 0) return 'in ' + h + 'h ' + min + 'm';
+    return 'in ' + Math.max(min, 1) + 'm';
+  }
+  fetch('links.json', { cache: 'no-cache' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (data) {
+      var s = data && data.nextShow;
+      if (!s || !s.enabled || !s.datetime || !/^https?:/i.test(s.url || '')) return;
+      var start = new Date(s.datetime);
+      if (isNaN(start)) return;
+      var host = document.getElementById('next-show');
+      var card = el('a', 'show-card');
+      card.href = s.url; card.target = '_blank'; card.rel = 'noopener';
+      var top = el('div', 'show-top'), kicker = el('span', 'show-kicker'), kText = el('span'), badge = el('span', 'show-badge');
+      kicker.appendChild(el('span', 'dot')); kicker.appendChild(kText);
+      top.appendChild(kicker); top.appendChild(badge);
+      card.appendChild(top);
+      card.appendChild(el('div', 'show-title', s.title || 'Live on Whatnot'));
+      card.appendChild(el('div', 'show-when',
+        start.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }) + ' · ' +
+        start.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' })));
+      function tick() {
+        var diff = start - Date.now();
+        if (diff <= -LIVE_WINDOW_MS) { host.textContent = ''; return false; }
+        var live = diff <= 0;
+        card.classList.toggle('live', live);
+        kText.textContent = live ? 'Live now on Whatnot' : 'Next show on Whatnot';
+        badge.textContent = live ? 'LIVE' : countdown(diff);
+        return true;
+      }
+      if (tick()) {
+        host.appendChild(card);
+        var t = setInterval(function () { if (!tick()) clearInterval(t); }, 30000);
+      }
+    })
+    .catch(function () {});
+})();
+</script>
+</body>
+</html>

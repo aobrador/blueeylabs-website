@@ -594,3 +594,6 @@ footer {
   .footer-links { flex-wrap: wrap; justify-content: center; }
   .footer-col { align-items: center; }
 }
+
+/* ── Anchor offset for fixed nav ── */
+section[id] { scroll-margin-top: 88px; }

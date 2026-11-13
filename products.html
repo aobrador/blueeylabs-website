@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Products & Services — Blueey Labs</title>
-  <meta name="description" content="Explore Blueey Labs products including Blufinn, and our full range of IT, app, and web development services." />
+  <meta name="description" content="Explore Blueey Labs products including Blufinn and StockLore, and our full range of IT, app, and web development services." />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16.png" />
   <meta property="og:title" content="Products & Services — Blueey Labs" />
-  <meta property="og:description" content="Explore Blueey Labs products including Blufinn, and our full range of IT, app, and web development services." />
+  <meta property="og:description" content="Explore Blueey Labs products including Blufinn and StockLore, and our full range of IT, app, and web development services." />
   <meta property="og:image" content="assets/images/og-image.png" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <style>
@@ -141,6 +141,16 @@
 
     .blufinn-cta { display: flex; gap: 14px; flex-wrap: wrap; }
 
+    /* ── StockLore ── */
+    .stocklore-section { padding: 0 24px 100px; }
+    .stocklore-card { border-color: rgba(245,128,74,0.3); background: linear-gradient(135deg, rgba(30,18,22,0.9) 0%, rgba(14,10,20,0.95) 100%); }
+    .stocklore-card::before { background: radial-gradient(ellipse at 80% 30%, rgba(245,128,74,0.09) 0%, transparent 65%); }
+    .warm-text { background: linear-gradient(135deg, #F5804A, #8B6BD9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .badge-warm { background: rgba(245,128,74,0.12); color: #FF9E70; border: 1px solid rgba(245,128,74,0.25); }
+    .btn-warm { background: linear-gradient(135deg, #F5804A, #8B6BD9); color: #fff; box-shadow: 0 4px 24px rgba(245,128,74,0.3); }
+    .btn-warm:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(245,128,74,0.45); }
+    .stocklore-card .blufinn-desc { margin-bottom: 36px; }
+
     /* ── Services Section ── */
     .services-detailed { padding: 80px 24px 100px; }
 
@@ -184,6 +194,7 @@
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="products.html">Products</a></li>
+      <li><a href="collects.html">Collects</a></li>
       <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
     </ul>
     <button class="hamburger" aria-label="Toggle menu">
@@ -297,6 +308,53 @@
   </div>
 </section>
 
+<!-- StockLore -->
+<section class="stocklore-section" id="stocklore">
+  <div class="blufinn-hero-card stocklore-card fade-up">
+    <div class="blufinn-top">
+      <img src="assets/images/stocklore-icon.png" alt="StockLore" class="blufinn-icon" />
+      <div class="blufinn-headline">
+        <span class="badge badge-warm"><span class="badge-dot"></span>In Development</span>
+        <h2><span class="warm-text">StockLore</span></h2>
+        <p class="tagline">Know your inventory. Know your profit.</p>
+      </div>
+    </div>
+
+    <p class="blufinn-desc">
+      StockLore helps trading-card businesses and collectors organize inventory, track costs and market value,
+      and understand profit.
+    </p>
+
+    <div class="blufinn-features">
+      <div class="feature-item">
+        <div class="feature-icon">📦</div>
+        <div class="feature-text">
+          <h4>Inventory</h4>
+          <p>Keep everything you own organized in one place.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💲</div>
+        <div class="feature-text">
+          <h4>Cost &amp; Market Value</h4>
+          <p>Track what you paid against what it's worth.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📈</div>
+        <div class="feature-text">
+          <h4>Profit</h4>
+          <p>Understand what you're actually making.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="blufinn-cta">
+      <a href="contact.html" class="btn btn-warm">Get Notified at Launch</a>
+    </div>
+  </div>
+</section>
+
 <div class="divider"></div>
 
 <!-- Services -->
@@ -364,7 +422,7 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-col">
-      <a href="../index.html" class="footer-logo"><img src="assets/images/logo.svg" alt="Blueey Labs" height="24" /></a>
+      <a href="index.html" class="footer-logo"><img src="assets/images/logo.svg" alt="Blueey Labs" height="24" /></a>
       <div class="footer-copy">
         <p>© 2026 Blueey Labs, LLC. All rights reserved.</p>
         <p style="margin-top:6px;">Made with ❤️ in Florida by Blueey Labs</p>
@@ -375,6 +433,7 @@
       <ul class="footer-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="products.html">Products</a></li>
+      <li><a href="collects.html">Collects</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </div>

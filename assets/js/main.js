@@ -41,10 +41,10 @@ if (hamburger && navLinks) {
 }
 
 // ── Active nav link ──
-const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+const pageName = (path) => (path.split('/').pop() || 'index').replace(/\.html$/, '');
+const currentPage = pageName(window.location.pathname);
 document.querySelectorAll('.nav-links a').forEach(link => {
-  const href = link.getAttribute('href');
-  if (href === currentPath || (currentPath === '' && href === 'index.html')) {
+  if (pageName(link.getAttribute('href')) === currentPage) {
     link.classList.add('active');
   }
 });
@@ -79,5 +79,5 @@ function typewriter(el, words, speed = 80, pause = 2000) {
 }
 const typeEl = document.getElementById('typewriter');
 if (typeEl) {
-  typewriter(typeEl, ['the way you work.', 'your budget.', 'your workflow.', 'what matters.']);
+  typewriter(typeEl, ['your money.', 'your inventory.', 'your collection.', 'the way you work.']);
 }

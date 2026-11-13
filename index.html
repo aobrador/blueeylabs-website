@@ -4,235 +4,190 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google-site-verification" content="KqsFOCeweIw0oXOMxku_s8AOJ8KxTMyEHTatM_EQQfM" />
-  <title>Blueey Labs — IT, App & Web Development</title>
-  <meta name="description" content="Blueey Labs builds modern apps, websites, and IT solutions. Clean. Purposeful. Built to last." />
+  <title>Blueey Labs — Apps, Tools & Trading Cards</title>
+  <meta name="description" content="Blueey Labs is a Florida studio building focused apps like Blufinn and StockLore, and the home of Blueey Collects trading cards." />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16.png" />
-  <meta property="og:title" content="Blueey Labs — IT, App & Web Development" />
-  <meta property="og:description" content="Blueey Labs builds modern apps, websites, and IT solutions. Clean. Purposeful. Built to last." />
+  <meta property="og:title" content="Blueey Labs — Apps, Tools & Trading Cards" />
+  <meta property="og:description" content="Blueey Labs is a Florida studio building focused apps like Blufinn and StockLore, and the home of Blueey Collects trading cards." />
   <meta property="og:image" content="assets/images/og-image.png" />
   <meta property="og:type" content="website" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <style>
+    :root {
+      --sl-orange: #F5804A;
+      --sl-purple: #8B6BD9;
+      --sl-gradient: linear-gradient(135deg, #F5804A, #8B6BD9);
+    }
+
     /* ── Hero ── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 120px 24px 80px;
-      position: relative;
-      z-index: 1;
+    .hero { padding: 150px 24px 90px; position: relative; z-index: 1; }
+    .hero-content {
+      max-width: 1160px; margin: 0 auto; position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 48px; align-items: center;
     }
-
-    .hero-content { max-width: 1160px; margin: 0 auto; width: 100%; }
-
-    .hero-eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 32px;
-    }
-
-    .hero-eyebrow-line {
-      width: 40px; height: 2px;
-      background: var(--gradient);
-      border-radius: 2px;
-    }
-
+    .hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+    .hero-eyebrow-line { width: 40px; height: 2px; background: var(--gradient); border-radius: 2px; }
     .hero-eyebrow-text {
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--cyan);
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cyan);
+    }
+    .hero h1 { margin-bottom: 24px; min-height: 2.4em; }
+    .hero-sub { font-size: 1.12rem; max-width: 520px; margin-bottom: 36px; line-height: 1.7; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* ── Hero visual: three floating tiles ── */
+    .hero-visual { position: relative; height: 400px; }
+    .tile {
+      position: absolute; display: block; border-radius: 24%;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.08);
+      animation: tileFloat 9s ease-in-out infinite;
+      transition: filter 0.25s ease;
+    }
+    .tile:hover { filter: brightness(1.12); }
+    .tile img { width: 100%; height: 100%; display: block; border-radius: inherit; }
+    .tile-blufinn { width: 190px; height: 190px; top: 20px; left: 8%; --r: -8deg; }
+    .tile-stocklore { width: 170px; height: 170px; top: 150px; right: 4%; --r: 9deg; animation-delay: -3s; }
+    .tile-collects {
+      width: 130px; height: 130px; bottom: 6px; left: 22%; --r: -4deg; animation-delay: -6s;
+      border-radius: 50%; background: var(--gradient); padding: 3px;
+    }
+    .tile-collects span {
+      width: 100%; height: 100%; border-radius: 50%; background: var(--bg-base);
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .tile-collects img { width: 80%; height: 80%; object-fit: contain; mix-blend-mode: screen; border-radius: 0; }
+    @keyframes tileFloat {
+      0%, 100% { transform: rotate(var(--r)) translateY(0); }
+      50% { transform: rotate(var(--r)) translateY(-14px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tile { animation: none; transform: rotate(var(--r)); }
     }
 
-    .hero h1 { margin-bottom: 24px; }
+    /* ── Sections ── */
+    .block { padding: 90px 24px; }
+    .block .section-header { margin-bottom: 48px; }
 
-    .hero-sub {
-      font-size: 1.15rem;
-      max-width: 520px;
-      margin-bottom: 40px;
-      line-height: 1.7;
+    /* ── App cards ── */
+    .apps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .app-card {
+      position: relative; overflow: hidden; border-radius: 24px; padding: 40px;
+      background: rgba(10, 22, 40, 0.6); border: 1px solid rgba(37, 99, 235, 0.28);
+      display: flex; flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
-
-    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
-
-    .hero-scroll {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+    .app-card::after {
+      content: ''; position: absolute; top: -120px; right: -120px; width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(0,196,255,0.12) 0%, transparent 70%); pointer-events: none;
     }
+    .app-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(37,99,235,0.2); border-color: rgba(0,196,255,0.4); }
+    .app-card.stocklore { border-color: rgba(245, 128, 74, 0.28); background: rgba(28, 18, 22, 0.6); }
+    .app-card.stocklore::after { background: radial-gradient(circle, rgba(245,128,74,0.14) 0%, transparent 70%); }
+    .app-card.stocklore:hover { box-shadow: 0 20px 60px rgba(245,128,74,0.16); border-color: rgba(245,128,74,0.5); }
 
-    .scroll-line {
-      width: 1px;
-      height: 48px;
-      background: linear-gradient(to bottom, var(--border-hover), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
+    .app-top { display: flex; align-items: center; gap: 20px; margin-bottom: 22px; }
+    .app-top img { width: 84px; height: 84px; border-radius: 20px; box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08); }
+    .app-top h3 { font-size: 1.8rem; margin-top: 8px; }
+    .stocklore .app-top h3 span {
+      background: var(--sl-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.4; transform: scaleY(1); }
-      50% { opacity: 1; transform: scaleY(0.7); }
+    .badge-warm { background: rgba(245,128,74,0.12); color: #FF9E70; border: 1px solid rgba(245,128,74,0.25); }
+    .app-tagline { font-size: 1.05rem; color: var(--text-primary); font-weight: 600; margin-bottom: 10px; }
+    .app-desc { font-size: 0.95rem; line-height: 1.7; margin-bottom: 22px; }
+    .app-points { list-style: none; display: grid; gap: 10px; margin-bottom: 30px; }
+    .app-points li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.9rem; color: var(--text-secondary); }
+    .app-points li::before {
+      content: '✓'; flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 0.68rem; margin-top: 1px;
+      color: var(--cyan); background: rgba(0,196,255,0.14); border: 1px solid rgba(0,196,255,0.3);
     }
+    .stocklore .app-points li::before { color: #FF9E70; background: rgba(245,128,74,0.14); border-color: rgba(245,128,74,0.3); }
+    .app-actions { margin-top: auto; display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-warm { background: var(--sl-gradient); color: #fff; box-shadow: 0 4px 24px rgba(245,128,74,0.3); }
+    .btn-warm:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(245,128,74,0.45); }
 
-    /* ── Stats ── */
-    .stats-bar {
-      padding: 40px 24px;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      position: relative; z-index: 1;
+    /* ── Collects band ── */
+    .collects-card {
+      max-width: 1160px; margin: 0 auto; border-radius: 24px; padding: 56px;
+      background: linear-gradient(135deg, rgba(37,99,235,0.16), rgba(0,196,255,0.05));
+      border: 1px solid rgba(37,99,235,0.32);
+      display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center;
+      position: relative; overflow: hidden;
     }
-
-    .stats-inner {
-      max-width: 1160px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 32px;
-      text-align: center;
+    .collects-card h2 { margin-bottom: 14px; }
+    .collects-card .desc { font-size: 1.02rem; line-height: 1.75; max-width: 520px; margin-bottom: 28px; }
+    .collects-card .desc strong { color: var(--cyan); }
+    .collects-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+    .platforms { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 0.8rem; color: var(--text-muted); }
+    .platforms a {
+      width: 40px; height: 40px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s ease;
     }
+    .platforms a:hover { transform: translateY(-3px); }
+    .platforms img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .platforms .pad { background: #fff; }
+    .platforms .pad img { object-fit: contain; padding: 4px; }
+    .platforms .ig { background: linear-gradient(135deg,#833ab4 0%,#fd1d1d 50%,#fcb045 100%); }
+    .platforms .ig svg { width: 20px; height: 20px; }
 
-    .stat-num {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      background: var(--gradient-text);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    /* Fanned cards */
+    .fan { position: relative; width: 300px; height: 280px; }
+    .fan i {
+      position: absolute; left: 50%; bottom: 10px; width: 150px; height: 210px; margin-left: -75px;
+      border-radius: 12px; transform-origin: 50% 110%;
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+      transition: transform 0.4s ease;
     }
-
-    .stat-label {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-      letter-spacing: 0.04em;
+    .fan i:nth-child(1) { transform: rotate(-22deg); background: linear-gradient(160deg, #1E3A8A, #0B1B3F); }
+    .fan i:nth-child(2) { transform: rotate(-8deg);  background: linear-gradient(160deg, #2563EB, #123075); }
+    .fan i:nth-child(3) { transform: rotate(6deg);   background: linear-gradient(160deg, #0EA5E9, #164E8A); }
+    .fan i:nth-child(4) {
+      transform: rotate(20deg); background: var(--bg-base); border: 2px solid rgba(0,196,255,0.55);
+      display: flex; align-items: center; justify-content: center;
     }
+    .fan i:nth-child(4) img { width: 72%; mix-blend-mode: screen; }
+    .collects-card:hover .fan i:nth-child(1) { transform: rotate(-28deg); }
+    .collects-card:hover .fan i:nth-child(2) { transform: rotate(-11deg); }
+    .collects-card:hover .fan i:nth-child(3) { transform: rotate(8deg); }
+    .collects-card:hover .fan i:nth-child(4) { transform: rotate(26deg); }
 
-    /* ── Services ── */
-    .services { padding: 100px 24px; }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-
-    .service-card .icon-box { margin-bottom: 20px; }
-    .service-card h3 { margin-bottom: 10px; font-size: 1.1rem; }
-    .service-card p { font-size: 0.9rem; line-height: 1.65; }
-
-    /* ── Blufinn Spotlight ── */
-    .spotlight { padding: 0 24px 100px; }
-
-    .spotlight-card {
-      max-width: 1160px;
-      margin: 0 auto;
-      background: rgba(10, 22, 40, 0.6);
-      border: 1px solid rgba(26, 109, 255, 0.25);
-      border-radius: 24px;
-      padding: 64px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .spotlight-card::after {
-      content: '';
-      position: absolute;
-      top: -80px; right: -80px;
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .spotlight-badge { margin-bottom: 20px; }
-
-    .spotlight-content h2 { margin-bottom: 16px; }
-
-    .spotlight-content .desc {
-      font-size: 1rem;
-      line-height: 1.75;
-      margin-bottom: 32px;
-    }
-
-    .spotlight-actions { display: flex; gap: 14px; flex-wrap: wrap; }
-
-    .spotlight-visual {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
-
-    .app-icon-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .app-icon-glow {
-      position: absolute;
-      width: 240px; height: 240px;
-      background: radial-gradient(circle, rgba(26,109,255,0.3) 0%, transparent 70%);
-      animation: glowPulse 3s ease-in-out infinite;
-    }
-
-    @keyframes glowPulse {
-      0%, 100% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.1); opacity: 1; }
-    }
-
-    .app-icon {
-      width: 160px; height: 160px;
-      border-radius: 36px;
-      position: relative;
-      z-index: 1;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
-    }
+    /* ── Services (compact) ── */
+    .services-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .svc { padding: 24px; border-radius: 16px; background: var(--bg-card); border: 1px solid var(--border); transition: border-color 0.25s ease; }
+    .svc:hover { border-color: var(--border-hover); }
+    .svc .icon-box { width: 44px; height: 44px; font-size: 1.2rem; margin-bottom: 14px; }
+    .svc h3 { font-size: 1rem; margin-bottom: 6px; }
+    .svc p { font-size: 0.85rem; line-height: 1.6; }
+    .services-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 36px; }
+    .services-head p { max-width: 480px; margin-top: 12px; }
 
     /* ── CTA ── */
-    .cta-section {
-      padding: 0 24px 100px;
-      text-align: center;
-    }
-
-    .cta-inner {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
+    .cta-section { padding: 20px 24px 100px; text-align: center; }
+    .cta-inner { max-width: 600px; margin: 0 auto; }
     .cta-inner h2 { margin-bottom: 16px; }
-    .cta-inner p { margin-bottom: 36px; }
-    .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .cta-inner p { margin-bottom: 32px; }
+    .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
-    @media (max-width: 900px) {
-      .spotlight-card {
-        grid-template-columns: 1fr;
-        padding: 40px 32px;
-        gap: 40px;
-      }
-      .spotlight-visual { order: -1; }
-      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 960px) {
+      .hero { padding: 120px 24px 60px; }
+      .hero-content { grid-template-columns: 1fr; gap: 24px; }
+      .hero-visual { height: 300px; max-width: 420px; width: 100%; margin: 0 auto; }
+      .tile-blufinn { width: 150px; height: 150px; top: 10px; left: 4%; }
+      .tile-stocklore { width: 132px; height: 132px; top: 110px; right: 4%; }
+      .tile-collects { width: 104px; height: 104px; left: 26%; }
+      .apps-grid { grid-template-columns: 1fr; }
+      .collects-card { grid-template-columns: 1fr; padding: 40px 28px; gap: 16px; }
+      .fan { order: -1; margin: 0 auto; transform: scale(0.8); height: 240px; }
+      .services-row { grid-template-columns: 1fr 1fr; }
     }
-
-    @media (max-width: 480px) {
-      .stats-inner { grid-template-columns: 1fr 1fr; gap: 24px; }
-      .hero { padding: 100px 24px 80px; }
+    @media (max-width: 520px) {
+      .block { padding: 64px 16px; }
+      .app-card { padding: 28px 22px; }
+      .app-top img { width: 68px; height: 68px; border-radius: 16px; }
+      .app-top h3 { font-size: 1.5rem; }
+      .services-row { grid-template-columns: 1fr; }
+      .hero h1 { min-height: 3.6em; }
     }
   </style>
 </head>
@@ -245,6 +200,7 @@
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="products.html">Products</a></li>
+      <li><a href="collects.html">Collects</a></li>
       <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
     </ul>
     <button class="hamburger" aria-label="Toggle menu">
@@ -261,106 +217,151 @@
     <div class="orb orb-3"></div>
   </div>
   <div class="hero-content">
-    <div class="hero-eyebrow fade-up">
-      <span class="hero-eyebrow-line"></span>
-      <span class="hero-eyebrow-text">Blueey Labs, LLC</span>
-    </div>
-    <h1 class="fade-up fade-up-delay-1">
-      Built for<br>
-      <span class="gradient-text typewriter-wrap"><span id="typewriter">the way you work.</span><span class="cursor"></span></span>
-    </h1>
-    <p class="hero-sub fade-up fade-up-delay-2">
-      We design and build apps, websites, and IT solutions that are clean, purposeful, and built to last. No fluff. Just tools that work.
-    </p>
-    <div class="hero-actions fade-up fade-up-delay-3">
-      <a href="products.html" class="btn btn-primary">See Our Work</a>
-      <a href="contact.html" class="btn btn-ghost">Get In Touch</a>
-    </div>
-  </div>
-  <div class="hero-scroll">
-    <span class="scroll-line"></span>
-    Scroll
-  </div>
-</section>
-
-<!-- Stats -->
-<div class="stats-bar">
-  <div class="stats-inner">
-    <div class="fade-up">
-      <div class="stat-num">4+</div>
-      <div class="stat-label">Core Services</div>
-    </div>
-    <div class="fade-up fade-up-delay-1">
-      <div class="stat-num">1</div>
-      <div class="stat-label">App Launching Soon</div>
-    </div>
-    <div class="fade-up fade-up-delay-2">
-      <div class="stat-num">iOS</div>
-      <div class="stat-label">Platform Focus</div>
-    </div>
-    <div class="fade-up fade-up-delay-3">
-      <div class="stat-num">100%</div>
-      <div class="stat-label">Privacy First</div>
-    </div>
-  </div>
-</div>
-
-<!-- Services -->
-<section class="services">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="section-label">What We Do</div>
-      <h2>Services built<br>around real needs.</h2>
-      <p>From IT consulting to full-stack app development — we build the tools and infrastructure that keep your business moving.</p>
-    </div>
-    <div class="services-grid">
-      <div class="card service-card fade-up">
-        <div class="icon-box">💻</div>
-        <h3>IT Consulting</h3>
-        <p>Strategic technology guidance, infrastructure planning, and support for businesses of all sizes. We help you make smart tech decisions.</p>
+    <div>
+      <div class="hero-eyebrow fade-up">
+        <span class="hero-eyebrow-line"></span>
+        <span class="hero-eyebrow-text">Blueey Labs · Orlando, FL</span>
       </div>
-      <div class="card service-card fade-up fade-up-delay-1">
-        <div class="icon-box">📱</div>
-        <h3>App Development</h3>
-        <p>Native iOS and cross-platform apps built with precision. From concept to App Store — we handle the full development lifecycle.</p>
+      <h1 class="fade-up fade-up-delay-1">
+        Built for<br>
+        <span class="gradient-text typewriter-wrap"><span id="typewriter">your money.</span><span class="cursor"></span></span>
+      </h1>
+      <p class="hero-sub fade-up fade-up-delay-2">
+        A small Florida studio making focused apps like Blufinn and StockLore. Also the home of Blueey Collects, where we buy, sell and trade cards.
+      </p>
+      <div class="hero-actions fade-up fade-up-delay-3">
+        <a href="#apps" class="btn btn-primary">See the Apps</a>
+        <a href="collects.html" class="btn btn-ghost">Blueey Collects →</a>
       </div>
-      <div class="card service-card fade-up fade-up-delay-2">
-        <div class="icon-box">🌐</div>
-        <h3>Web Development</h3>
-        <p>Modern, fast, and responsive websites and web apps. Clean code, great design, and optimized for performance from day one.</p>
-      </div>
-      <div class="card service-card fade-up fade-up-delay-3">
-        <div class="icon-box">⚙️</div>
-        <h3>Utility Apps</h3>
-        <p>Purpose-built tools that solve specific problems. We specialize in apps that do one thing exceptionally well — and get out of your way.</p>
-      </div>
+    </div>
+    <div class="hero-visual fade-up fade-up-delay-2" aria-hidden="true">
+      <a href="#apps" class="tile tile-blufinn" tabindex="-1"><img src="assets/images/blufinn-icon.png" alt="" /></a>
+      <a href="#apps" class="tile tile-stocklore" tabindex="-1"><img src="assets/images/stocklore-icon.png" alt="" /></a>
+      <a href="collects.html" class="tile tile-collects" tabindex="-1"><span><img src="assets/images/blueey-collects-logo.webp" alt="" /></span></a>
     </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- Blufinn Spotlight -->
-<section class="spotlight" style="padding-top: 100px;">
-  <div class="spotlight-card fade-up">
-    <div class="spotlight-content">
-      <div class="spotlight-badge">
-        <span class="badge badge-cyan"><span class="badge-dot"></span>Coming Soon</span>
-      </div>
-      <h2>Meet <span class="gradient-text">Blufinn.</span></h2>
+<!-- Apps -->
+<section class="block" id="apps">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-label">Our Apps</div>
+      <h2>Tools that do one job<br>really well.</h2>
+      <p>Private, focused apps for your money and your inventory.</p>
+    </div>
+
+    <div class="apps-grid">
+      <article class="app-card fade-up">
+        <div class="app-top">
+          <img src="assets/images/blufinn-icon.png" alt="Blufinn app icon" />
+          <div>
+            <span class="badge badge-cyan"><span class="badge-dot"></span>Coming Soon · iOS</span>
+            <h3><span class="gradient-text">Blufinn</span></h3>
+          </div>
+        </div>
+        <p class="app-tagline">Know what's due. Know what's left.</p>
+        <p class="app-desc">A private, local-first money planner for credit cards, recurring bills, budgets and paychecks.</p>
+        <ul class="app-points">
+          <li>Track card due dates, bills and subscriptions in one place</li>
+          <li>Plan what each paycheck needs to cover</li>
+          <li>No bank connection. Your data stays on your device</li>
+        </ul>
+        <div class="app-actions">
+          <a href="products.html#blufinn" class="btn btn-primary">Learn More</a>
+          <a href="contact.html" class="btn btn-outline">Get Notified</a>
+        </div>
+      </article>
+
+      <article class="app-card stocklore fade-up fade-up-delay-1">
+        <div class="app-top">
+          <img src="assets/images/stocklore-icon.png" alt="StockLore app icon" />
+          <div>
+            <span class="badge badge-warm"><span class="badge-dot"></span>In Development</span>
+            <h3><span>StockLore</span></h3>
+          </div>
+        </div>
+        <p class="app-tagline">Know your inventory. Know your profit.</p>
+        <p class="app-desc">Helps trading-card businesses and collectors organize inventory, track costs and market value, and understand profit.</p>
+        <ul class="app-points">
+          <li>Keep your whole inventory organized</li>
+          <li>Track what you paid against market value</li>
+          <li>See your real profit</li>
+        </ul>
+        <div class="app-actions">
+          <a href="products.html#stocklore" class="btn btn-warm">Learn More</a>
+          <a href="contact.html" class="btn btn-ghost">Get Notified</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Blueey Collects -->
+<section class="block" id="collects" style="padding-top: 10px;">
+  <div class="collects-card fade-up">
+    <div>
+      <div class="section-label">Blueey Collects</div>
+      <h2>Cards are the<br><span class="gradient-text">other half of us.</span></h2>
       <p class="desc">
-        A private, local-first money planner for credit cards, recurring bills, budgets, and paychecks.
-        Know what's due. Know what's left.
+        Lorcana collector based in Orlando. We collect, buy, sell and trade, with live shows every week on Whatnot.
+        <strong>Always buying</strong>, so if you have a collection to sell, send it our way.
       </p>
-      <div class="spotlight-actions">
-        <a href="products.html#blufinn" class="btn btn-primary">Learn More</a>
-        <a href="contact.html" class="btn btn-outline">Get Notified</a>
+      <div class="collects-actions">
+        <a href="collects.html#sell" class="btn btn-primary">Sell Me Your Collection</a>
+        <a href="collects.html" class="btn btn-ghost">Visit Blueey Collects</a>
+      </div>
+      <div class="platforms">
+        <span>Find us on</span>
+        <a class="ig" href="https://www.instagram.com/blueeycollects/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="white"/></svg>
+        </a>
+        <a href="https://www.whatnot.com/user/blueeytv/shows" target="_blank" rel="noopener" aria-label="Whatnot"><img src="assets/images/whatnot-logo.png" alt="" /></a>
+        <a class="pad" href="https://www.tcgplayer.com/sellers/Blueey-Labs/9c25921c" target="_blank" rel="noopener" aria-label="TCGPlayer"><img src="assets/images/tcgplayer-logo.png" alt="" /></a>
+        <a class="pad" href="https://ebay.io/m/PekpHV" target="_blank" rel="noopener" aria-label="eBay"><img src="assets/images/ebay-logo.webp" alt="" style="padding:0;object-fit:cover;" /></a>
       </div>
     </div>
-    <div class="spotlight-visual">
-      <div class="app-icon-wrap">
-        <div class="app-icon-glow"></div>
-        <img src="assets/images/blufinn-icon.png" alt="Blufinn App" class="app-icon" />
+    <div class="fan" aria-hidden="true">
+      <i></i><i></i><i></i><i><img src="assets/images/blueey-collects-logo.webp" alt="" /></i>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Services -->
+<section class="block">
+  <div class="container">
+    <div class="services-head fade-up">
+      <div>
+        <div class="section-label">Services</div>
+        <h2>Need something built?</h2>
+        <p>We also take on client work: apps, websites and IT help for small businesses.</p>
+      </div>
+      <a href="contact.html" class="btn btn-outline">Start a Project</a>
+    </div>
+    <div class="services-row">
+      <div class="svc fade-up">
+        <div class="icon-box">📱</div>
+        <h3>App Development</h3>
+        <p>iOS and cross-platform apps, from idea to the App Store.</p>
+      </div>
+      <div class="svc fade-up fade-up-delay-1">
+        <div class="icon-box">🌐</div>
+        <h3>Web Development</h3>
+        <p>Fast, modern websites and web apps that are easy to run.</p>
+      </div>
+      <div class="svc fade-up fade-up-delay-2">
+        <div class="icon-box">💻</div>
+        <h3>IT Consulting</h3>
+        <p>Practical tech guidance, setup and support.</p>
+      </div>
+      <div class="svc fade-up fade-up-delay-3">
+        <div class="icon-box">⚙️</div>
+        <h3>Utility Apps</h3>
+        <p>Small custom tools that solve one specific problem.</p>
       </div>
     </div>
   </div>
@@ -369,11 +370,12 @@
 <!-- CTA -->
 <section class="cta-section">
   <div class="cta-inner">
-    <div class="section-label fade-up">Work With Us</div>
-    <h2 class="fade-up">Have a project in mind?</h2>
-    <p class="fade-up fade-up-delay-1">We'd love to hear about it. Whether you need an app built, a site launched, or IT help — let's talk.</p>
+    <div class="section-label fade-up">Get In Touch</div>
+    <h2 class="fade-up">Got a project or a collection?</h2>
+    <p class="fade-up fade-up-delay-1">Tell us about the thing you want built, or the cards you want to sell.</p>
     <div class="cta-actions fade-up fade-up-delay-2">
-      <a href="contact.html" class="btn btn-primary">Start a Conversation</a>
+      <a href="contact.html" class="btn btn-primary">Contact Blueey Labs</a>
+      <a href="https://ig.me/m/blueeycollects" target="_blank" rel="noopener" class="btn btn-ghost">DM Blueey Collects</a>
     </div>
   </div>
 </section>
@@ -393,6 +395,7 @@
       <ul class="footer-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="products.html">Products</a></li>
+      <li><a href="collects.html">Collects</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </div>
