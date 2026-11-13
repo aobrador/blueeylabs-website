@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trading Card Seller Fee Calculator: eBay, Whatnot &amp; TCGPlayer | Blueey Labs</title>
+  <meta name="description" content="Free fee calculator for trading card sellers. Enter a sale price and see what you keep after eBay, Whatnot and TCGPlayer fees, plus your real profit after cost and shipping." />
+  <link rel="canonical" href="https://blueeylabs.com/fee-calculator" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16.png" />
+  <meta property="og:title" content="Trading Card Seller Fee Calculator: eBay, Whatnot &amp; TCGPlayer" />
+  <meta property="og:description" content="See what you keep after eBay, Whatnot and TCGPlayer fees, and your real profit after cost and shipping." />
+  <meta property="og:image" content="https://blueeylabs.com/assets/images/og-image.png" />
+  <meta property="og:url" content="https://blueeylabs.com/fee-calculator" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/app-page.css" />
+  <style>
+    .calc-hero { padding: 140px 24px 40px; text-align: center; position: relative; z-index: 1; }
+    .calc-hero h1 { font-size: clamp(2.1rem, 5.5vw, 3.3rem); margin: 16px auto 14px; max-width: 760px; }
+    .calc-hero p { max-width: 600px; margin: 0 auto; font-size: 1.05rem; line-height: 1.7; }
+
+    .calc { max-width: 1000px; margin: 0 auto; padding: 0 24px 70px; position: relative; z-index: 1; }
+    .calc-inputs {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+      padding: 24px; border-radius: 20px; background: var(--bg-card); border: 1px solid var(--border);
+    }
+    .field label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+    .field small { display: block; font-size: 0.74rem; color: var(--text-muted); margin-bottom: 8px; min-height: 2.3em; line-height: 1.4; }
+    .money { position: relative; }
+    .money span {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--text-muted); font-weight: 600; pointer-events: none;
+    }
+    .money input, .rate input {
+      width: 100%; font: inherit; font-size: 1.05rem; font-weight: 600; color: var(--text-primary);
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 12px;
+      padding: 13px 14px 13px 28px; font-variant-numeric: tabular-nums;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .money input:focus, .rate input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type=number] { -moz-appearance: textfield; appearance: textfield; }
+
+    .results { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 16px; }
+    .res {
+      position: relative; padding: 22px 20px; border-radius: 18px; background: var(--bg-card);
+      border: 1px solid var(--border); transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .res.best { border-color: var(--accent-border); box-shadow: 0 12px 40px var(--accent-soft); transform: translateY(-3px); }
+    .res .best-tag {
+      position: absolute; top: -10px; right: 14px; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 4px 9px; border-radius: 999px; color: #fff; background: var(--accent-grad);
+      opacity: 0; transition: opacity 0.25s ease;
+    }
+    .res.best .best-tag { opacity: 1; }
+    .res h3 { font-size: 1rem; margin-bottom: 14px; }
+    .res .keep-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+    .res .profit { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); font-variant-numeric: tabular-nums; margin: 2px 0 14px; letter-spacing: -0.02em; }
+    .res .profit.neg { color: #F87171; }
+    .res dl { display: grid; grid-template-columns: 1fr auto; gap: 7px 10px; font-size: 0.82rem; border-top: 1px solid var(--border); padding-top: 12px; }
+    .res dt { color: var(--text-secondary); }
+    .res dd { color: var(--text-primary); font-variant-numeric: tabular-nums; text-align: right; }
+    .res .how { margin-top: 12px; font-size: 0.72rem; line-height: 1.5; color: var(--text-muted); }
+
+    .rates { margin-top: 16px; border-radius: 16px; background: var(--bg-card); border: 1px solid var(--border); padding: 0 22px; }
+    .rates summary {
+      cursor: pointer; list-style: none; padding: 16px 0; font-weight: 600; font-size: 0.92rem; color: var(--text-primary);
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    }
+    .rates summary::-webkit-details-marker { display: none; }
+    .rates summary::after { content: '+'; color: var(--accent); font-size: 1.3rem; transition: transform 0.25s ease; }
+    .rates[open] summary::after { transform: rotate(45deg); }
+    .rates-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; padding-bottom: 20px; }
+    .rates-grid h4 { font-size: 0.85rem; margin-bottom: 10px; color: var(--text-primary); }
+    .rate { display: grid; grid-template-columns: 1fr 92px; gap: 10px; align-items: center; margin-bottom: 8px; }
+    .rate label { font-size: 0.8rem; color: var(--text-secondary); }
+    .rate input { padding: 8px 10px; font-size: 0.9rem; text-align: right; }
+    .rates-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding-bottom: 20px; }
+    .rates-foot button {
+      font: inherit; font-size: 0.8rem; font-weight: 600; color: var(--accent); background: none;
+      border: 1px solid var(--accent-border); border-radius: 999px; padding: 7px 14px; cursor: pointer;
+    }
+    .rates-foot button:hover { background: var(--accent-soft); }
+    .disclaimer { margin-top: 16px; font-size: 0.78rem; line-height: 1.65; color: var(--text-muted); }
+    .disclaimer a { color: var(--text-secondary); }
+
+    @media (max-width: 900px) {
+      .calc-inputs, .results { grid-template-columns: 1fr 1fr; }
+      .rates-grid { grid-template-columns: 1fr; gap: 14px; }
+    }
+    @media (max-width: 520px) {
+      .calc-hero { padding: 116px 20px 30px; }
+      .calc { padding: 0 16px 50px; }
+      .calc-inputs { padding: 18px; }
+      .results { grid-template-columns: 1fr; }
+      .field small { min-height: 0; }
+      .res.best { transform: none; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Trading Card Seller Fee Calculator",
+    "url": "https://blueeylabs.com/fee-calculator",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free calculator showing what trading card sellers keep after eBay, Whatnot and TCGPlayer fees.",
+    "publisher": { "@type": "Organization", "name": "Blueey Labs", "url": "https://blueeylabs.com" }
+  }
+  </script>
+</head>
+<body class="warm" data-nav="products">
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/images/logo.svg" alt="Blueey Labs" height="28" /></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="collects.html">Collects</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="calc-hero">
+  <span class="badge badge-accent fade-up"><span class="badge-dot"></span>Free Tool</span>
+  <h1 class="fade-up fade-up-delay-1">Trading card seller <span class="accent-text">fee calculator</span></h1>
+  <p class="fade-up fade-up-delay-2">Enter a sale and see what you actually keep on eBay, Whatnot, TCGPlayer and in person, side by side.</p>
+</section>
+
+<section class="calc">
+  <form class="calc-inputs fade-up" id="inputs" onsubmit="return false" novalidate>
+    <div class="field">
+      <label for="price">Sale price</label>
+      <small>What the card or product sells for.</small>
+      <div class="money"><span>$</span><input id="price" type="number" inputmode="decimal" min="0" step="0.01" value="50" /></div>
+    </div>
+    <div class="field">
+      <label for="shipCharged">Shipping charged</label>
+      <small>What the buyer pays you for shipping.</small>
+      <div class="money"><span>$</span><input id="shipCharged" type="number" inputmode="decimal" min="0" step="0.01" value="0" /></div>
+    </div>
+    <div class="field">
+      <label for="cost">What you paid</label>
+      <small>Your cost for the item.</small>
+      <div class="money"><span>$</span><input id="cost" type="number" inputmode="decimal" min="0" step="0.01" value="30" /></div>
+    </div>
+    <div class="field">
+      <label for="shipCost">Your shipping cost</label>
+      <small>Postage and supplies you pay.</small>
+      <div class="money"><span>$</span><input id="shipCost" type="number" inputmode="decimal" min="0" step="0.01" value="1" /></div>
+    </div>
+  </form>
+
+  <div class="results fade-up" id="results" aria-live="polite"></div>
+
+  <details class="rates fade-up">
+    <summary>Fee rates used (tap to adjust)</summary>
+    <div class="rates-grid">
+      <div>
+        <h4>eBay</h4>
+        <div class="rate"><label for="r-ebayPct">Final value fee %</label><input id="r-ebayPct" type="number" inputmode="decimal" step="0.01" min="0" /></div>
+        <div class="rate"><label for="r-ebayLow">Per order, $10 or less</label><input id="r-ebayLow" type="number" inputmode="decimal" step="0.01" min="0" /></div>
+        <div class="rate"><label for="r-ebayHigh">Per order, over $10</label><input id="r-ebayHigh" type="number" inputmode="decimal" step="0.01" min="0" /></div>
+      </div>
+      <div>
+        <h4>Whatnot</h4>
+        <div class="rate"><label for="r-wnPct">Commission %</label><input id="r-wnPct" type="number" inputmode="decimal" step="0.01" min="0" /></div>
+        <div class="rate"><label for="r-wnProcPct">Processing %</label><input id="r-wnProcPct" type="number" inputmode="decimal" step="0.01" min="0" /></div>
+        <div class="rate"><label for="r-wnProcFlat">Processing flat $</label><input id="r-wnProcFlat" type="number" inputmode="decimal" step="0.01" min="0" /></div>
+      </div>
+      <div>
+        <h4>TCGPlayer</h4>
+        <div class="rate"><label for="r-tcgPct">Commission %</label><input id="r-tcgPct" type="number" inputmode="decimal" step="0.01" min="0" /></div>
+        <div class="rate"><label for="r-tcgCap">Commission cap $</label><input id="r-tcgCap" type="number" inputmode="decimal" step="0.01" min="0" /></div>
+        <div class="rate"><label for="r-tcgProcPct">Processing %</label><input id="r-tcgProcPct" type="number" inputmode="decimal" step="0.01" min="0" /></div>
+        <div class="rate"><label for="r-tcgProcFlat">Processing flat $</label><input id="r-tcgProcFlat" type="number" inputmode="decimal" step="0.01" min="0" /></div>
+      </div>
+    </div>
+    <div class="rates-foot">
+      <span class="disclaimer" style="margin:0;">Have a store subscription or a different seller level? Put your own rates in.</span>
+      <button type="button" id="reset">Reset to defaults</button>
+    </div>
+  </details>
+
+  <p class="disclaimer">
+    Estimates only. Default rates are standard US seller rates for trading cards, last checked November 2026: eBay with no store subscription,
+    Whatnot standard commission, and TCGPlayer Marketplace seller levels 1 to 4. Sales tax, promoted listings, international fees and
+    promotions aren't included, and platforms change their fees. Check
+    <a href="https://www.ebay.com/help/selling/fees-credits-invoices/selling-fees?id=4822" target="_blank" rel="noopener">eBay</a>,
+    <a href="https://help.whatnot.com/" target="_blank" rel="noopener">Whatnot</a> and
+    <a href="https://help.tcgplayer.com/hc/en-us/articles/201357836-Fees" target="_blank" rel="noopener">TCGPlayer</a>
+    for current rates. Blueey Labs isn't affiliated with any of them.
+  </p>
+</section>
+
+<section class="app-block" style="padding-top: 0;">
+  <div class="app-narrow">
+    <div class="callout fade-up">
+      <div>
+        <div class="section-label">StockLore · In development</div>
+        <h2>Want this tracked for <span class="accent-text">every sale?</span></h2>
+        <p>StockLore is our upcoming app for trading-card sellers. It keeps your inventory, cost of goods and sales from every channel in one place, so you see real profit after fees without doing the math.</p>
+        <div class="app-actions" style="justify-content:flex-start; margin-top: 22px;">
+          <a href="stocklore/" class="btn btn-accent">See StockLore</a>
+        </div>
+      </div>
+      <ul class="check-list">
+        <li>Singles and sealed product in one inventory</li>
+        <li>COGS calculated from what you actually paid</li>
+        <li>Sales from eBay, Whatnot, TCGPlayer and local deals</li>
+        <li>Real profit after platform fees</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="app-block" style="padding-top: 0;" id="faq">
+  <div class="app-narrow" style="max-width: 760px;">
+    <div class="section-header fade-up">
+      <div class="section-label">How it works</div>
+      <h2>About the math.</h2>
+    </div>
+    <div class="faq fade-up">
+      <details><summary>How is profit calculated?</summary><p>Sale price plus shipping charged, minus platform fees, minus what you paid for the item, minus your own shipping cost. Margin is that profit divided by the sale price plus shipping charged.</p></details>
+      <details><summary>How are eBay fees calculated?</summary><p>A final value fee percentage on the sale price plus shipping charged, plus a small per-order fee that depends on whether the order is over $10. eBay also charges its percentage on the sales tax the buyer pays, which this calculator leaves out, so real fees run slightly higher.</p></details>
+      <details><summary>How are Whatnot fees calculated?</summary><p>A commission percentage on the sale price, plus payment processing (a percentage and a flat amount) on the sale price plus shipping charged. Processing also applies to sales tax, which isn't included here.</p></details>
+      <details><summary>How are TCGPlayer fees calculated?</summary><p>A commission percentage on the sale price plus shipping charged, up to a cap, plus payment processing (a percentage and a flat amount). The flat processing amount is per order, so it hurts most on cheap single-card orders.</p></details>
+      <details><summary>Why does selling in person show no fees?</summary><p>Cash deals at a show or local meetup have no platform fee. If you take payment through an app that charges business fees, count that as part of your shipping and supplies cost.</p></details>
+      <details><summary>Does this work for sealed product?</summary><p>Yes. The math is the same for singles, sealed boxes and lots. Shipping cost matters much more for sealed, so fill that in.</p></details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <a href="index.html" class="footer-logo"><img src="assets/images/logo.svg" alt="Blueey Labs" height="24" /></a>
+      <div class="footer-copy">
+        <p>© 2026 Blueey Labs, LLC. All rights reserved.</p>
+        <p style="margin-top:6px;">Made with ❤️ in Florida by Blueey Labs</p>
+      </div>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-label">Navigation</span>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="collects.html">Collects</a></li>
+        <li><a href="fee-calculator.html">Fee Calculator</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-label">Legal</span>
+      <ul class="footer-links">
+        <li><a href="legal/terms.html">Terms of Service</a></li>
+        <li><a href="legal/privacy.html">Privacy Policy</a></li>
+        <li><a href="blufinn/terms.html">Blufinn Terms</a></li>
+        <li><a href="blufinn/privacy.html">Blufinn Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/main.js"></script>
+<script>
+(function () {
+  var DEFAULTS = {
+    ebayPct: 13.25, ebayLow: 0.30, ebayHigh: 0.40,
+    wnPct: 8, wnProcPct: 2.9, wnProcFlat: 0.30,
+    tcgPct: 10.75, tcgCap: 75, tcgProcPct: 2.5, tcgProcFlat: 0.30
+  };
+  var num = function (id) {
+    var v = parseFloat(document.getElementById(id).value);
+    return isFinite(v) && v > 0 ? v : 0;
+  };
+  var usd = function (n) {
+    var s = Math.abs(n).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    return n < -0.004 ? '-' + s : s;
+  };
+  var PLATFORMS = [
+    { key: 'ebay', name: 'eBay', fee: function (p, s, r) {
+        var total = p + s;
+        return total * r.ebayPct / 100 + (total > 10 ? r.ebayHigh : r.ebayLow);
+      }, how: function (r) { return r.ebayPct + '% of the total, plus ' + usd(r.ebayLow) + ' or ' + usd(r.ebayHigh) + ' per order.'; } },
+    { key: 'whatnot', name: 'Whatnot', fee: function (p, s, r) {
+        return p * r.wnPct / 100 + (p + s) * r.wnProcPct / 100 + r.wnProcFlat;
+      }, how: function (r) { return r.wnPct + '% commission, plus ' + r.wnProcPct + '% + ' + usd(r.wnProcFlat) + ' processing.'; } },
+    { key: 'tcg', name: 'TCGPlayer', fee: function (p, s, r) {
+        var total = p + s;
+        return Math.min(total * r.tcgPct / 100, r.tcgCap) + total * r.tcgProcPct / 100 + r.tcgProcFlat;
+      }, how: function (r) { return r.tcgPct + '% commission (max ' + usd(r.tcgCap) + '), plus ' + r.tcgProcPct + '% + ' + usd(r.tcgProcFlat) + ' processing.'; } },
+    { key: 'local', name: 'In person', fee: function () { return 0; }, how: function () { return 'Cash or local meetup. No platform fee.'; } }
+  ];
+
+  var box = document.getElementById('results');
+  var cards = {};
+  PLATFORMS.forEach(function (pl) {
+    var el = document.createElement('div');
+    el.className = 'res';
+    var tag = document.createElement('span'); tag.className = 'best-tag'; tag.textContent = 'Best online';
+    var h = document.createElement('h3'); h.textContent = pl.name;
+    var kl = document.createElement('div'); kl.className = 'keep-label'; kl.textContent = 'Profit';
+    var pr = document.createElement('div'); pr.className = 'profit';
+    var dl = document.createElement('dl');
+    var rows = {};
+    [['fees', 'Fees'], ['payout', 'Payout'], ['margin', 'Margin']].forEach(function (row) {
+      var dt = document.createElement('dt'); dt.textContent = row[1];
+      var dd = document.createElement('dd');
+      dl.appendChild(dt); dl.appendChild(dd); rows[row[0]] = dd;
+    });
+    var how = document.createElement('p'); how.className = 'how';
+    el.appendChild(tag); el.appendChild(h); el.appendChild(kl); el.appendChild(pr); el.appendChild(dl); el.appendChild(how);
+    box.appendChild(el);
+    cards[pl.key] = { el: el, profit: pr, rows: rows, how: how };
+  });
+
+  function rates() {
+    var r = {};
+    Object.keys(DEFAULTS).forEach(function (k) {
+      var v = parseFloat(document.getElementById('r-' + k).value);
+      r[k] = isFinite(v) && v >= 0 ? v : DEFAULTS[k];
+    });
+    return r;
+  }
+  function calc() {
+    var p = num('price'), s = num('shipCharged'), c = num('cost'), sc = num('shipCost');
+    var r = rates(), bestKey = null, best = -Infinity;
+    PLATFORMS.forEach(function (pl) {
+      var fees = p + s > 0 ? pl.fee(p, s, r) : 0;
+      var payout = p + s - fees;
+      var profit = payout - c - sc;
+      var card = cards[pl.key];
+      card.profit.textContent = usd(profit);
+      card.profit.classList.toggle('neg', profit < -0.004);
+      card.rows.fees.textContent = usd(fees) + (p + s > 0 && fees > 0 ? ' (' + (fees / (p + s) * 100).toFixed(1) + '%)' : '');
+      card.rows.payout.textContent = usd(payout);
+      card.rows.margin.textContent = p + s > 0 ? (profit / (p + s) * 100).toFixed(1) + '%' : '0%';
+      card.how.textContent = pl.how(r);
+      if (pl.key !== 'local' && profit > best) { best = profit; bestKey = pl.key; }
+    });
+    PLATFORMS.forEach(function (pl) {
+      cards[pl.key].el.classList.toggle('best', p + s > 0 && pl.key === bestKey);
+    });
+  }
+  function setDefaults() {
+    Object.keys(DEFAULTS).forEach(function (k) { document.getElementById('r-' + k).value = DEFAULTS[k]; });
+  }
+  setDefaults();
+  document.querySelector('.calc').addEventListener('input', calc);
+  document.getElementById('reset').addEventListener('click', function () { setDefaults(); calc(); });
+  calc();
+})();
+</script>
+</body>
+</html>
