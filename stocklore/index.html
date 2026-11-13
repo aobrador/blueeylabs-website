@@ -12,6 +12,31 @@
   <meta property="og:image" content="https://blueeylabs.com/assets/images/og-image.png" />
   <link rel="stylesheet" href="../assets/css/style.css" />
   <link rel="stylesheet" href="../assets/css/app-page.css" />
+  <style>
+    .fee-teaser { align-items: stretch; }
+    .fee-fine { font-size: 0.76rem !important; color: var(--text-muted); margin-top: 12px; line-height: 1.5 !important; }
+    .fee-mini {
+      background: rgba(10, 15, 28, 0.55); border: 1px solid var(--border); border-radius: 18px; padding: 24px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .fee-mini label { font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; }
+    .fee-mini-input { position: relative; margin-bottom: 20px; }
+    .fee-mini-input span { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-weight: 700; font-size: 1.3rem; }
+    .fee-mini-input input {
+      width: 100%; font: inherit; font-size: 1.6rem; font-weight: 800; color: var(--text-primary);
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 12px;
+      padding: 10px 14px 10px 36px; font-variant-numeric: tabular-nums; -moz-appearance: textfield; appearance: textfield;
+    }
+    .fee-mini-input input::-webkit-outer-spin-button, .fee-mini-input input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .fee-mini-input input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .fee-rows { display: grid; gap: 14px; }
+    .fee-row { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; align-items: baseline; font-size: 0.9rem; color: var(--text-secondary); }
+    .fee-row strong { color: var(--text-primary); font-variant-numeric: tabular-nums; font-size: 1rem; }
+    .fee-row i { grid-column: 1 / -1; grid-row: 2; height: 6px; border-radius: 99px; background: rgba(255,255,255,0.06); overflow: hidden; display: block; }
+    .fee-row b { display: block; height: 100%; border-radius: 99px; background: var(--accent-grad); transition: width 0.35s ease; }
+    .fee-more { margin-top: 20px; font-size: 0.86rem; font-weight: 600; color: var(--accent); text-decoration: none; }
+    .fee-more:hover { text-decoration: underline; }
+  </style>
 </head>
 <body class="warm" data-nav="products">
 <nav>
@@ -56,6 +81,33 @@
       <div class="feat glow fade-up"><div class="emoji">🛒</div><h3>Every Sale, Any Channel</h3><p>Track sales from eBay, Whatnot, TCGPlayer, local deals and more, all in one place.</p></div>
       <div class="feat glow fade-up fade-up-delay-1"><div class="emoji">✂️</div><h3>Platform Fees</h3><p>Online platforms take a cut. StockLore accounts for fees so your numbers are honest.</p></div>
       <div class="feat glow fade-up fade-up-delay-2"><div class="emoji">📈</div><h3>Real Profit</h3><p>See what you actually made after cost and fees, per sale and overall.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="app-block" style="padding-top: 0;" id="fees">
+  <div class="app-narrow">
+    <div class="callout fee-teaser fade-up">
+      <div>
+        <div class="section-label">The fee problem</div>
+        <h2>Every platform takes <span class="accent-text">a different cut.</span></h2>
+        <p>eBay, Whatnot and TCGPlayer each charge their own mix of percentages and per-order fees. Working that out sale by sale in a spreadsheet is slow and easy to get wrong. StockLore does that math for you on every sale, so you just see what you made.</p>
+        <div class="app-actions" style="justify-content:flex-start; margin-top: 24px;">
+          <a href="../fee-calculator.html" class="btn btn-accent">Try the Free Fee Calculator</a>
+        </div>
+        <p class="fee-fine">Available now, no sign-up. StockLore itself is still in development.</p>
+      </div>
+      <div class="fee-mini" aria-live="polite">
+        <label for="mini-price">If a card sells for</label>
+        <div class="fee-mini-input"><span>$</span><input id="mini-price" type="number" inputmode="decimal" min="0" step="1" value="50" /></div>
+        <div class="fee-rows">
+          <div class="fee-row"><span>eBay keeps</span><i><b id="mb-ebay"></b></i><strong id="mf-ebay"></strong></div>
+          <div class="fee-row"><span>Whatnot keeps</span><i><b id="mb-wn"></b></i><strong id="mf-wn"></strong></div>
+          <div class="fee-row"><span>TCGPlayer keeps</span><i><b id="mb-tcg"></b></i><strong id="mf-tcg"></strong></div>
+        </div>
+        <a class="fee-more" href="../fee-calculator.html">Add your cost and shipping to see real profit →</a>
+        <p class="fee-fine">Estimates using standard US rates, before sales tax.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -134,5 +186,27 @@
   </div>
 </footer>
 <script src="../assets/js/main.js"></script>
+<script>
+(function () {
+  var input = document.getElementById('mini-price');
+  if (!input) return;
+  var usd = function (n) { return n.toLocaleString('en-US', { style: 'currency', currency: 'USD' }); };
+  function run() {
+    var p = parseFloat(input.value); if (!isFinite(p) || p < 0) p = 0;
+    var fees = {
+      ebay: p > 0 ? p * 0.1325 + (p > 10 ? 0.40 : 0.30) : 0,
+      wn: p > 0 ? p * 0.08 + p * 0.029 + 0.30 : 0,
+      tcg: p > 0 ? Math.min(p * 0.1075, 75) + p * 0.025 + 0.30 : 0
+    };
+    var max = Math.max(fees.ebay, fees.wn, fees.tcg, 0.01);
+    Object.keys(fees).forEach(function (k) {
+      document.getElementById('mf-' + k).textContent = usd(fees[k]);
+      document.getElementById('mb-' + k).style.width = (fees[k] / max * 100).toFixed(1) + '%';
+    });
+  }
+  input.addEventListener('input', run);
+  run();
+})();
+</script>
 </body>
 </html>
