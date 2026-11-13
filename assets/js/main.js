@@ -32,7 +32,7 @@ if (hamburger && navLinks) {
 
 // ── Active nav link ──
 const pageName = (path) => (path.split('/').pop() || 'index').replace(/\.html$/, '');
-const currentPage = pageName(window.location.pathname);
+const currentPage = document.body.dataset.nav || pageName(window.location.pathname);
 document.querySelectorAll('.nav-links a').forEach(link => {
   if (pageName(link.getAttribute('href')) === currentPage) link.classList.add('active');
 });

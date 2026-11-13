@@ -632,6 +632,49 @@ section[id] { scroll-margin-top: 88px; }
 .glow:hover::before { opacity: 1; }
 .glow-warm { --glow-color: rgba(255, 150, 90, 0.95); }
 
+/* ── FAQ ── */
+:root { interpolate-size: allow-keywords; }
+.faq { display: grid; gap: 12px; }
+.faq details {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0 22px;
+  transition: border-color 0.25s ease;
+}
+.faq details[open], .faq details:hover { border-color: var(--border-hover); }
+.faq summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 18px 0;
+  font-weight: 600;
+  font-size: 0.98rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: '+';
+  flex-shrink: 0;
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--accent, var(--cyan));
+  transition: transform 0.3s ease;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { padding-bottom: 18px; font-size: 0.93rem; line-height: 1.75; }
+.faq details a { color: var(--accent, var(--cyan)); text-decoration: none; }
+.faq details a:hover { text-decoration: underline; }
+.faq details::details-content {
+  block-size: 0;
+  overflow: clip;
+  transition: block-size 0.35s cubic-bezier(0.22, 1, 0.36, 1), content-visibility 0.35s allow-discrete;
+}
+.faq details[open]::details-content { block-size: auto; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
   .fade-up { opacity: 1; transform: none; }
